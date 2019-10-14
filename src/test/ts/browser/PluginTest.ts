@@ -13,12 +13,12 @@ UnitTest.asynctest('browser.PluginTest', (success, failure) => {
 
     Pipeline.async({}, [
       Logger.t('test click on button', GeneralSteps.sequence([
-        tinyUi.sClickOnToolbar('click tinymce-mathquill-plugin button', 'button:contains("tinymce-mathquill-plugin button")'),
-        tinyApis.sAssertContent('<p>content added from tinymce-mathquill-plugin</p>')
+        tinyUi.sClickOnToolbar('click mathquill-editor button', 'button:contains("mathquill-editor button")'),
+        tinyApis.sAssertContent('<p>content added from mathquill-editor</p>')
       ]))
     ], onSuccess, onFailure);
   }, {
-    plugins: 'tinymce-mathquill-plugin',
-    toolbar: 'tinymce-mathquill-plugin'
+    plugins: 'mathquill-editor',
+    toolbar: 'mathquill-editor'
   }, success, failure);
 });

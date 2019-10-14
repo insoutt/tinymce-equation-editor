@@ -1,9 +1,11 @@
 declare const tinymce: any;
 
 const setup = (editor, url) => {
-    editor.addCommand("mceMathquill", function(data) {
+    console.log("editor", editor);
+
+    editor.addCommand("mathquill-window", function(data) {
         // data contenido de execCommand(data)
-        console.log("add command mceMathquill", data);
+        console.log("add command mathquill-window", data);
         editor.windowManager.openUrl(
             {
                 url: "equation_editor.html",
@@ -17,16 +19,16 @@ const setup = (editor, url) => {
         );
     });
 
-    editor.ui.registry.addButton("tinymce-mathquill-plugin", {
+    editor.ui.registry.addButton("mathquill-editor", {
         title: "Editor de ecuaciones",
         text: "f(x)",
         onAction: () => {
             // tslint:disable-next-line:no-console
-            editor.execCommand("mceMathquill");
+            editor.execCommand("mathquill-window");
         }
     });
 };
 
 export default () => {
-    tinymce.PluginManager.add("tinymce-mathquill-plugin", setup);
+    tinymce.PluginManager.add("mathquill-editor", setup);
 };

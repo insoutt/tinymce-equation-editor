@@ -1,9 +1,9 @@
-import Plugin from './Plugin';
+import Plugin from "./Plugin";
 
 Plugin();
 
 /*******
  * DO NOT EXPORT ANYTHING
  *
- * IF YOU DO ROLLUP WILL LEAVE A `tinymce-mathquill-plugin` GLOBAL ON THE PAGE
+ * IF YOU DO ROLLUP WILL LEAVE A `mathquill-editor` GLOBAL ON THE PAGE
  *******/

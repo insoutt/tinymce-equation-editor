@@ -1,11 +1,11 @@
-import Plugin from '../../main/ts/Plugin';
+import Plugin from "../../main/ts/Plugin";
 
 declare let tinymce: any;
 
 Plugin();
 
 tinymce.init({
-  selector: 'textarea.tinymce',
-  plugins: 'code tinymce-mathquill-plugin',
-  toolbar: 'tinymce-mathquill-plugin'
+    selector: "textarea.tinymce",
+    plugins: "code mathquill-editor",
+    toolbar: "mathquill-editor"
 });
