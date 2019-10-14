@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Equation Editor</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script type="text/javascript" src="mathquill/mathquill.js"></script>
+        <link rel="stylesheet" type="text/css" href="mathquill/mathquill.css" />
+        <link rel="stylesheet" type="text/css" href="css/equation_editor.css" />
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        />
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"
+        ></script>
+    </head>
+
+    <body class="equation-editor">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-8">
+                    <div class="btn-container">
+                        <button class="btn btn-outline-dark">1</button>
+                        <button class="btn btn-outline-dark">2</button>
+                        <button class="btn btn-outline-dark">3</button>
+                        <button class="btn btn-outline-dark">4</button>
+                    </div>
+                    <div id="math-field" class="mathquill-editor"></div>
+                </div>
+                <div class="col-4">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header p-0" id="headingOne">
+                                <h2 class="mb-0">
+                                    <button
+                                        class="btn btn-link"
+                                        type="button"
+                                        data-toggle="collapse"
+                                        data-target="#collapseOne"
+                                        aria-expanded="true"
+                                        aria-controls="collapseOne"
+                                    >
+                                        Logaritmos
+                                    </button>
+                                </h2>
+                            </div>
+
+                            <div
+                                id="collapseOne"
+                                class="collapse show"
+                                aria-labelledby="headingOne"
+                                data-parent="#accordionExample"
+                            >
+                                <div class="card-body p-2">
+                                    <div class="btn-container">
+                                        <button class="btn btn-outline-dark">
+                                            1
+                                        </button>
+                                        <button class="btn btn-outline-dark">
+                                            2
+                                        </button>
+                                        <button class="btn btn-outline-dark">
+                                            3
+                                        </button>
+                                        <button class="btn btn-outline-dark">
+                                            4
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header p-0" id="headingTwo">
+                                <h2 class="mb-0">
+                                    <button
+                                        class="btn btn-link collapsed"
+                                        type="button"
+                                        data-toggle="collapse"
+                                        data-target="#collapseTwo"
+                                        aria-expanded="false"
+                                        aria-controls="collapseTwo"
+                                    >
+                                        Trigonometría
+                                    </button>
+                                </h2>
+                            </div>
+                            <div
+                                id="collapseTwo"
+                                class="collapse"
+                                aria-labelledby="headingTwo"
+                                data-parent="#accordionExample"
+                            >
+                                <div class="card-body p-2">
+                                    <div class="btn-container">
+                                        <button class="btn btn-outline-dark">
+                                            1
+                                        </button>
+                                        <button class="btn btn-outline-dark">
+                                            2
+                                        </button>
+                                        <button class="btn btn-outline-dark">
+                                            3
+                                        </button>
+                                        <button class="btn btn-outline-dark">
+                                            4
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header p-0" id="headingThree">
+                                <h2 class="mb-0">
+                                    <button
+                                        class="btn btn-link collapsed"
+                                        type="button"
+                                        data-toggle="collapse"
+                                        data-target="#collapseThree"
+                                        aria-expanded="false"
+                                        aria-controls="collapseThree"
+                                    >
+                                        Relaciones
+                                    </button>
+                                </h2>
+                            </div>
+                            <div
+                                id="collapseThree"
+                                class="collapse"
+                                aria-labelledby="headingThree"
+                                data-parent="#accordionExample"
+                            >
+                                <div class="card-body p-2">
+                                    <div class="btn-container">
+                                        <button class="btn btn-outline-dark">
+                                            1
+                                        </button>
+                                        <button class="btn btn-outline-dark">
+                                            2
+                                        </button>
+                                        <button class="btn btn-outline-dark">
+                                            3
+                                        </button>
+                                        <button class="btn btn-outline-dark">
+                                            4
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="d-none" id="latex"></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var mathFieldSpan = document.getElementById("math-field");
+            var latexSpan = document.getElementById("latex");
+
+            var MQ = MathQuill.getInterface(2); // for backcompat
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // configurable
+                handlers: {
+                    edit: function() {
+                        // useful event handlers
+                        latexSpan.textContent = mathField.latex(); // simple API
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
