@@ -1,11 +1,12 @@
-import { timeout } from "@ephox/agar/lib/main/ts/ephox/agar/api/Guard";
-
 declare const tinymce: any;
 declare const document: any;
 
 const setup = (editor, url) => {
     editor.addCommand("mathquill-window", function(data) {
         let settings = editor.settings.mathquill_editor_config;
+        let groups = editor.settings.mathquill_editor_button_groups;
+        let btnBar = editor.settings.mathquill_editor_button_bar;
+
         if (typeof settings === "undefined") {
             settings = {
                 url: "equation_editor.html",
@@ -15,6 +16,66 @@ const setup = (editor, url) => {
             throw "Url property must be specified in mathquill_editor_config";
         } else if (typeof settings.origin === "undefined") {
             throw "Origin property must be specified in mathquill_editor_config";
+        }
+
+        if (typeof groups === "undefined") {
+            groups = {
+                basic: [
+                    {
+                        name: "Numbers",
+                        buttons: "1 2 3 4 5 6 7 8 9 0"
+                    },
+                    {
+                        name: "Arithmetic and Units",
+                        buttons:
+                            "+ - \\times \\div \\pm \\overline \\cdot / $ \\degree %"
+                    }
+                ],
+                intermediate: [
+                    {
+                        name: "Exponents, Roots, Logs",
+                        buttons: [
+                            {
+                                text: "y^x",
+                                latex: "^"
+                            },
+                            {
+                                text: "\\sqrt{x}",
+                                latex: "\\sqrt"
+                            },
+                            {
+                                text: "\\nthroot[3]{x}",
+                                latex: "\\thirdroot"
+                            },
+                            {
+                                text: "\\nthroot[n]{x}",
+                                latex: "\\nthroot"
+                            },
+                            {
+                                text: "e^x"
+                            },
+                            {
+                                text: "\\ln"
+                            },
+                            {
+                                text: "\\log"
+                            },
+                            {
+                                text: "\\log_b"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Relations",
+                        buttons:
+                            "= \\neq \\sim \\not\\sim \\lt \\gt \\approx \\not\\approx \\le \\ge \\simeq \\not\\simeq \\therefore"
+                    }
+                ]
+            };
+        }
+
+        if (typeof btnBar === "undefined") {
+            btnBar = "\\times y^2";
         }
 
         console.log("add command mathquill-window", data);
