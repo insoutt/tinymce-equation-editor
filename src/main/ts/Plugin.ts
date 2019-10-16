@@ -1,5 +1,15 @@
+import ButtonsTransformer from "./ButtonsTransformer";
+import { ButtonConfig } from "./ButtonsTransformer";
+import { window } from "@ephox/dom-globals";
+import { Transform } from "stream";
+
 declare const tinymce: any;
 declare const document: any;
+
+interface Group {
+    name: string;
+    buttons: Array<ButtonConfig>;
+}
 
 const setup = (editor, url) => {
     editor.addCommand("mathquill-window", function(data) {
@@ -86,15 +96,47 @@ const setup = (editor, url) => {
             height: 400
         });
         iframe = document.querySelector("iframe[src='equation_editor.html']");
+        const buttonBar = new ButtonsTransformer(
+            editor.settings.mathquill_editor_button_bar
+        ).transform();
+
+        let buttonGroups = editor.settings.mathquill_editor_button_groups;
+
+        for (const groupName in buttonGroups) {
+            if (!buttonGroups.hasOwnProperty(groupName)) continue;
+
+            let buttonGroup = buttonGroups[groupName];
+
+            if (!(buttonGroup instanceof Array)) {
+                throw "Groups must be an array ";
+            }
+
+            let transformGroup: Array<Group> = buttonGroup.map(group => {
+                if (typeof group.name === "undefined") {
+                    throw "You must define group name property";
+                } else if (typeof group.name !== "string") {
+                    throw "Group name must be string";
+                } else if (typeof group.buttons === "undefined") {
+                    throw "You must define buttons property";
+                }
+
+                let buttons = new ButtonsTransformer(group.buttons).transform();
+                return {
+                    name: group.name,
+                    buttons: buttons
+                };
+            });
+
+            buttonGroups[groupName] = transformGroup;
+        }
+
         setTimeout(() => {
             iframe.contentWindow.postMessage(
                 {
                     mathquill_editor_group:
                         editor.settings.mathquill_editor_group,
-                    mathquill_editor_button_bar:
-                        editor.settings.mathquill_editor_button_bar,
-                    mathquill_editor_button_groups:
-                        editor.settings.mathquill_editor_button_groups
+                    mathquill_editor_button_bar: buttonBar,
+                    mathquill_editor_button_groups: buttonGroups
                 },
                 settings.origin
             );

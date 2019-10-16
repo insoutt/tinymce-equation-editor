@@ -1,4 +1,4 @@
-interface ButtonConfig {
+export interface ButtonConfig {
     text: string;
     cmd: number;
 }
