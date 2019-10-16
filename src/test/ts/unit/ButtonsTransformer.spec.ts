@@ -11,11 +11,11 @@ describe("Test ButtonsTransformer", function() {
         expect(transformer.transform()).to.eql([
             {
                 text: "+",
-                cmd: "+"
+                latex: "+"
             },
             {
                 text: "\\times",
-                cmd: "\\times"
+                latex: "\\times"
             }
         ]);
     });
@@ -24,27 +24,27 @@ describe("Test ButtonsTransformer", function() {
         const transformer = new ButtonsTransformer([
             {
                 text: "y^x",
-                cmd: "^"
+                latex: "^"
             },
             {
                 text: "\\sqrt{x}",
-                cmd: "\\sqrt"
+                latex: "\\sqrt"
             }
         ]);
 
         expect(transformer.transform()).to.eql([
             {
                 text: "y^x",
-                cmd: "^"
+                latex: "^"
             },
             {
                 text: "\\sqrt{x}",
-                cmd: "\\sqrt"
+                latex: "\\sqrt"
             }
         ]);
     });
 
-    it("check array transform adds cmd property", function() {
+    it("check array transform adds latex property", function() {
         const transformer = new ButtonsTransformer([
             {
                 text: "y^x"
@@ -57,11 +57,11 @@ describe("Test ButtonsTransformer", function() {
         expect(transformer.transform()).to.eql([
             {
                 text: "y^x",
-                cmd: "y^x"
+                latex: "y^x"
             },
             {
                 text: "\\sqrt{x}",
-                cmd: "\\sqrt{x}"
+                latex: "\\sqrt{x}"
             }
         ]);
     });
@@ -81,11 +81,11 @@ describe("Test ButtonsTransformer", function() {
         expect(transformer.transform()).to.eql([
             {
                 text: "y^x",
-                cmd: "y^x"
+                latex: "y^x"
             },
             {
                 text: "\\sqrt{x}",
-                cmd: "\\sqrt{x}"
+                latex: "\\sqrt{x}"
             }
         ]);
     });
@@ -119,7 +119,7 @@ describe("Test ButtonsTransformer fails", function() {
     it("buttons without text propery", function() {
         const transformer = new ButtonsTransformer([
             {},
-            { cmd: "1" },
+            { latex: "1" },
             { any: "1" }
         ]);
         assert.throws(
@@ -144,19 +144,19 @@ describe("Test ButtonsTransformer fails", function() {
         );
     });
 
-    it("value of cmd propery as int", function() {
-        const transformer = new ButtonsTransformer([{ text: "1", cmd: 1 }]);
+    it("value of latex propery as int", function() {
+        const transformer = new ButtonsTransformer([{ text: "1", latex: 1 }]);
         assert.throws(
             () => transformer.transform(),
-            "cmd property of button must be a string"
+            "latex property of button must be a string"
         );
     });
 
-    it("value of cmd propery as object", function() {
-        const transformer = new ButtonsTransformer([{ text: "1", cmd: {} }]);
+    it("value of latex propery as object", function() {
+        const transformer = new ButtonsTransformer([{ text: "1", latex: {} }]);
         assert.throws(
             () => transformer.transform(),
-            "cmd property of button must be a string"
+            "latex property of button must be a string"
         );
     });
 

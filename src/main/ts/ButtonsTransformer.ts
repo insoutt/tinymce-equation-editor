@@ -1,6 +1,6 @@
 export interface ButtonConfig {
     text: string;
-    cmd: number;
+    latex: string;
 }
 
 export default class ButtonsTransformer {
@@ -31,18 +31,18 @@ export default class ButtonsTransformer {
                 throw "You must define text property of button";
             } else if (typeof button.text !== "string") {
                 throw "text property of button must be a string";
-            } else if (typeof button.cmd === "undefined") {
+            } else if (typeof button.latex === "undefined") {
                 return {
                     text: button.text,
-                    cmd: button.text
+                    latex: button.text
                 };
-            } else if (typeof button.cmd !== "string") {
-                throw "cmd property of button must be a string";
+            } else if (typeof button.latex !== "string") {
+                throw "latex property of button must be a string";
             }
 
             return {
                 text: button.text,
-                cmd: button.cmd
+                latex: button.latex
             };
         });
     }
@@ -56,7 +56,7 @@ export default class ButtonsTransformer {
         return buttonsArray.map(button => {
             return {
                 text: button,
-                cmd: button
+                latex: button
             };
         });
     }
