@@ -11,16 +11,18 @@ describe("Test ButtonsTransformer", function() {
         expect(transformer.transform()).to.eql([
             {
                 text: "+",
-                latex: "+"
+                latex: "+",
+                cmd: false
             },
             {
                 text: "\\times",
-                latex: "\\times"
+                latex: "\\times",
+                cmd: false
             }
         ]);
     });
 
-    it("check array transform", function() {
+    it("check array transform without cmd", function() {
         const transformer = new ButtonsTransformer([
             {
                 text: "y^x",
@@ -35,11 +37,41 @@ describe("Test ButtonsTransformer", function() {
         expect(transformer.transform()).to.eql([
             {
                 text: "y^x",
-                latex: "^"
+                latex: "^",
+                cmd: false
             },
             {
                 text: "\\sqrt{x}",
-                latex: "\\sqrt"
+                latex: "\\sqrt",
+                cmd: false
+            }
+        ]);
+    });
+
+    it("check array transform with cmd", function() {
+        const transformer = new ButtonsTransformer([
+            {
+                text: "y^x",
+                latex: "^",
+                cmd: true
+            },
+            {
+                text: "\\sqrt{x}",
+                latex: "\\sqrt",
+                cmd: true
+            }
+        ]);
+
+        expect(transformer.transform()).to.eql([
+            {
+                text: "y^x",
+                latex: "^",
+                cmd: true
+            },
+            {
+                text: "\\sqrt{x}",
+                latex: "\\sqrt",
+                cmd: true
             }
         ]);
     });
@@ -57,11 +89,13 @@ describe("Test ButtonsTransformer", function() {
         expect(transformer.transform()).to.eql([
             {
                 text: "y^x",
-                latex: "y^x"
+                latex: "y^x",
+                cmd: false
             },
             {
                 text: "\\sqrt{x}",
-                latex: "\\sqrt{x}"
+                latex: "\\sqrt{x}",
+                cmd: false
             }
         ]);
     });
@@ -81,11 +115,13 @@ describe("Test ButtonsTransformer", function() {
         expect(transformer.transform()).to.eql([
             {
                 text: "y^x",
-                latex: "y^x"
+                latex: "y^x",
+                cmd: false
             },
             {
                 text: "\\sqrt{x}",
-                latex: "\\sqrt{x}"
+                latex: "\\sqrt{x}",
+                cmd: false
             }
         ]);
     });
@@ -128,7 +164,7 @@ describe("Test ButtonsTransformer fails", function() {
         );
     });
 
-    it("value of text propery as int", function() {
+    it("text propery as int", function() {
         const transformer = new ButtonsTransformer([{ text: 1 }]);
         assert.throws(
             () => transformer.transform(),
@@ -136,7 +172,23 @@ describe("Test ButtonsTransformer fails", function() {
         );
     });
 
-    it("value of text propery as object", function() {
+    it("cmd propery as int", function() {
+        const transformer = new ButtonsTransformer([{ text: "1", cmd: 1 }]);
+        assert.throws(
+            () => transformer.transform(),
+            "cmd property must be boolean"
+        );
+    });
+
+    it("cmd propery as object", function() {
+        const transformer = new ButtonsTransformer([{ text: "1", cmd: {} }]);
+        assert.throws(
+            () => transformer.transform(),
+            "cmd property must be boolean"
+        );
+    });
+
+    it("text propery as object", function() {
         const transformer = new ButtonsTransformer([{ text: {} }]);
         assert.throws(
             () => transformer.transform(),
@@ -144,7 +196,7 @@ describe("Test ButtonsTransformer fails", function() {
         );
     });
 
-    it("value of latex propery as int", function() {
+    it("latex propery as int", function() {
         const transformer = new ButtonsTransformer([{ text: "1", latex: 1 }]);
         assert.throws(
             () => transformer.transform(),
@@ -152,7 +204,7 @@ describe("Test ButtonsTransformer fails", function() {
         );
     });
 
-    it("value of latex propery as object", function() {
+    it("latex propery as object", function() {
         const transformer = new ButtonsTransformer([{ text: "1", latex: {} }]);
         assert.throws(
             () => transformer.transform(),
