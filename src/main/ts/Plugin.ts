@@ -16,7 +16,7 @@ const setup = (editor, url) => {
         let settings = editor.settings.mathquill_editor_config;
         let groups = editor.settings.mathquill_editor_button_groups;
         let btnBar = editor.settings.mathquill_editor_button_bar;
-
+        var latex = "";
         if (typeof settings === "undefined") {
             settings = {
                 url: "equation_editor.html",
@@ -107,6 +107,14 @@ const setup = (editor, url) => {
             ],
             onAction: () => {
                 editor.windowManager.close();
+                console.log("latex", latex);
+            },
+            onMessage: (instance, data) => {
+                switch (data.mceAction) {
+                    case "mathquill-update":
+                        latex = data.latex;
+                        break;
+                }
             }
         });
         iframe = document.querySelector("iframe[src='" + settings.url + "']");

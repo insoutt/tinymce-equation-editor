@@ -5,7 +5,8 @@ var app = new Vue({
         buttonBar: [],
         buttonGroups: {},
         currentGroup: [],
-        mathField: ""
+        mathField: "",
+        latex: ""
     },
     created() {
         if (window.addEventListener) {
@@ -37,6 +38,8 @@ var app = new Vue({
                 handlers: {
                     edit: () => {
                         latexSpan.textContent = this.mathField.latex(); // simple API
+                        this.latex = this.mathField.latex();
+                        this.sendLatex();
                     }
                 }
             });
@@ -49,10 +52,13 @@ var app = new Vue({
                 this.mathField.write(button.latex);
             }
             this.mathField.focus();
+        },
+
+        sendLatex() {
             window.parent.postMessage(
                 {
-                    mceAction: "mathquill-insert",
-                    content: button
+                    mceAction: "mathquill-update",
+                    latex: this.latex
                 },
                 "*"
             );
