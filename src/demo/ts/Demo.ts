@@ -14,7 +14,17 @@ function init(selector, inline: boolean) {
         plugins: "code mathquill-editor",
         toolbar: "mathquill-editor",
         mathquill_editor_group: "basic",
-        mathquill_editor_button_bar: "\\times y^2",
+        //mathquill_editor_button_bar: "\\times y^2",
+        mathquill_editor_button_bar: [
+            {
+                text: "y^x",
+                cmd: "^"
+            },
+            {
+                text: "\\sqrt{x}",
+                cmd: "\\sqrt"
+            }
+        ],
         mathquill_editor_button_groups: {
             basic: [
                 {
@@ -33,19 +43,19 @@ function init(selector, inline: boolean) {
                     buttons: [
                         {
                             text: "y^x",
-                            latex: "^"
+                            cmd: "^"
                         },
                         {
                             text: "\\sqrt{x}",
-                            latex: "\\sqrt"
+                            cmd: "\\sqrt"
                         },
                         {
                             text: "\\nthroot[3]{x}",
-                            latex: "\\thirdroot"
+                            cmd: "\\thirdroot"
                         },
                         {
                             text: "\\nthroot[n]{x}",
-                            latex: "\\nthroot"
+                            cmd: "\\nthroot"
                         },
                         {
                             text: "e^x"
