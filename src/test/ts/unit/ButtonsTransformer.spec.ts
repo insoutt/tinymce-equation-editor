@@ -65,18 +65,114 @@ describe("Test ButtonsTransformer", function() {
             }
         ]);
     });
+
+    it("check array transform remove keys", function() {
+        const transformer = new ButtonsTransformer([
+            {
+                text: "y^x",
+                other: "1"
+            },
+            {
+                text: "\\sqrt{x}",
+                other: "1"
+            }
+        ]);
+
+        expect(transformer.transform()).to.eql([
+            {
+                text: "y^x",
+                cmd: "y^x"
+            },
+            {
+                text: "\\sqrt{x}",
+                cmd: "\\sqrt{x}"
+            }
+        ]);
+    });
 });
 
 describe("Test ButtonsTransformer fails", function() {
     it("check empty string", function() {
         const transformer = new ButtonsTransformer("");
-
-        // expect(transformer.transform).to.throw(
-        //     "You must define at least 1 button"
-        // );
         assert.throws(
             () => transformer.transform(),
             "You must define at least 1 button"
+        );
+    });
+
+    it("constructor must be string or array", function() {
+        const transformer = new ButtonsTransformer(1);
+        assert.throws(
+            () => transformer.transform(),
+            "Buttons must be a string or array"
+        );
+    });
+
+    it("array without buttons", function() {
+        const transformer = new ButtonsTransformer([]);
+        assert.throws(
+            () => transformer.transform(),
+            "You must define at least one button"
+        );
+    });
+
+    it("buttons without text propery", function() {
+        const transformer = new ButtonsTransformer([
+            {},
+            { cmd: "1" },
+            { any: "1" }
+        ]);
+        assert.throws(
+            () => transformer.transform(),
+            "You must define text property of button"
+        );
+    });
+
+    it("value of text propery as int", function() {
+        const transformer = new ButtonsTransformer([{ text: 1 }]);
+        assert.throws(
+            () => transformer.transform(),
+            "text property of button must be a string"
+        );
+    });
+
+    it("value of text propery as object", function() {
+        const transformer = new ButtonsTransformer([{ text: {} }]);
+        assert.throws(
+            () => transformer.transform(),
+            "text property of button must be a string"
+        );
+    });
+
+    it("value of cmd propery as int", function() {
+        const transformer = new ButtonsTransformer([{ text: "1", cmd: 1 }]);
+        assert.throws(
+            () => transformer.transform(),
+            "cmd property of button must be a string"
+        );
+    });
+
+    it("value of cmd propery as object", function() {
+        const transformer = new ButtonsTransformer([{ text: "1", cmd: {} }]);
+        assert.throws(
+            () => transformer.transform(),
+            "cmd property of button must be a string"
+        );
+    });
+
+    it("button as int", function() {
+        const transformer = new ButtonsTransformer([1]);
+        assert.throws(
+            () => transformer.transform(),
+            "Button must be an object"
+        );
+    });
+
+    it("button is not an object ", function() {
+        const transformer = new ButtonsTransformer([{ text: "1" }, 1, ""]);
+        assert.throws(
+            () => transformer.transform(),
+            "Button must be an object"
         );
     });
 });
