@@ -29,6 +29,7 @@
                     <!-- Button Bar -->
                     <div class="btn-container">
                         <button
+                            @click="insert(button)"
                             v-for="button in buttonBar"
                             class="btn btn-outline-dark"
                         >
@@ -72,6 +73,7 @@
                                 <div class="card-body p-2">
                                     <div class="btn-container">
                                         <button
+                                            @click="insert(button)"
                                             v-for="button in group.buttons"
                                             class="btn btn-outline-dark"
                                         >

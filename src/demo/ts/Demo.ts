@@ -18,11 +18,17 @@ function init(selector, inline: boolean) {
         mathquill_editor_button_bar: [
             {
                 text: "y^x",
-                cmd: "^"
+                latex: "^",
+                cmd: true
+            },
+            {
+                text: "y^x",
+                latex: "y^x"
             },
             {
                 text: "\\sqrt{x}",
-                cmd: "\\sqrt"
+                latex: "\\sqrt",
+                cmd: true
             }
         ],
         mathquill_editor_button_groups: {
@@ -43,19 +49,23 @@ function init(selector, inline: boolean) {
                     buttons: [
                         {
                             text: "y^x",
-                            cmd: "^"
+                            latex: "^",
+                            cmd: true
                         },
                         {
                             text: "\\sqrt{x}",
-                            cmd: "\\sqrt"
+                            latex: "\\sqrt",
+                            cmd: true
                         },
                         {
                             text: "\\nthroot[3]{x}",
-                            cmd: "\\thirdroot"
+                            latex: "\\thirdroot",
+                            cmd: true
                         },
                         {
                             text: "\\nthroot[n]{x}",
-                            cmd: "\\nthroot"
+                            latex: "\\nthroot",
+                            cmd: true
                         },
                         {
                             text: "e^x"

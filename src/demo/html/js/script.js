@@ -4,7 +4,8 @@ var app = new Vue({
         defaultGroup: "",
         buttonBar: [],
         buttonGroups: {},
-        currentGroup: []
+        currentGroup: [],
+        mathField: ""
     },
     created() {
         if (window.addEventListener) {
@@ -30,16 +31,31 @@ var app = new Vue({
             var mathFieldSpan = document.getElementById("math-field");
             var latexSpan = document.getElementById("latex");
 
-            var MQ = MathQuill.getInterface(2); // for backcompat
-            var mathField = MQ.MathField(mathFieldSpan, {
+            window.MQ = MathQuill.getInterface(2); // for backcompat
+            this.mathField = MQ.MathField(mathFieldSpan, {
                 spaceBehavesLikeTab: true, // configurable
                 handlers: {
-                    edit: function() {
-                        // useful event handlers
-                        latexSpan.textContent = mathField.latex(); // simple API
+                    edit: () => {
+                        latexSpan.textContent = this.mathField.latex(); // simple API
                     }
                 }
             });
+        },
+        insert(button) {
+            console.log("button", button);
+            if (button.cmd) {
+                this.mathField.cmd(button.latex);
+            } else {
+                this.mathField.write(button.latex);
+            }
+            this.mathField.focus();
+            window.parent.postMessage(
+                {
+                    mceAction: "mathquill-insert",
+                    content: button
+                },
+                "*"
+            );
         }
     }
 });
