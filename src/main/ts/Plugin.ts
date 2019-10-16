@@ -1,7 +1,5 @@
 import ButtonsTransformer from "./ButtonsTransformer";
 import { ButtonConfig } from "./ButtonsTransformer";
-import { window } from "@ephox/dom-globals";
-import { Transform } from "stream";
 
 declare const tinymce: any;
 declare const document: any;
