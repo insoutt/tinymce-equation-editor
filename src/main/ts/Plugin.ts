@@ -130,7 +130,7 @@ const setup = (editor, url) => {
             buttonGroups[groupName] = transformGroup;
         }
 
-        setTimeout(() => {
+        iframe.onload = function() {
             iframe.contentWindow.postMessage(
                 {
                     mathquill_editor_group:
@@ -140,7 +140,7 @@ const setup = (editor, url) => {
                 },
                 settings.origin
             );
-        }, 1000);
+        };
     });
 
     editor.ui.registry.addButton("mathquill-editor", {
