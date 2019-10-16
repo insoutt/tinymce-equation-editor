@@ -93,9 +93,23 @@ const setup = (editor, url) => {
             url: settings.url,
             title: "Equation Editor",
             width: 820,
-            height: 400
+            height: 400,
+            buttons: [
+                {
+                    type: "cancel",
+                    text: "cancel"
+                },
+                {
+                    type: "custom",
+                    text: "insert",
+                    primary: true
+                }
+            ],
+            onAction: () => {
+                editor.windowManager.close();
+            }
         });
-        iframe = document.querySelector("iframe[src='equation_editor.html']");
+        iframe = document.querySelector("iframe[src='" + settings.url + "']");
         const buttonBar = new ButtonsTransformer(
             editor.settings.mathquill_editor_button_bar
         ).transform();
@@ -147,7 +161,6 @@ const setup = (editor, url) => {
         title: "Editor de ecuaciones",
         text: "f(x)",
         onAction: () => {
-            // tslint:disable-next-line:no-console
             editor.execCommand("mathquill-window");
         }
     });
