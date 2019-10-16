@@ -1,22 +1,43 @@
+import { timeout } from "@ephox/agar/lib/main/ts/ephox/agar/api/Guard";
+
 declare const tinymce: any;
+declare const document: any;
 
 const setup = (editor, url) => {
-    console.log("editor", editor);
-
     editor.addCommand("mathquill-window", function(data) {
-        // data contenido de execCommand(data)
-        console.log("add command mathquill-window", data);
-        editor.windowManager.openUrl(
-            {
+        let settings = editor.settings.mathquill_editor_config;
+        if (typeof settings === "undefined") {
+            settings = {
                 url: "equation_editor.html",
-                title: "Equation Editor",
-                width: 820,
-                height: 400
-            },
-            {
-                custom_param: 1
-            }
-        );
+                origin: document.location.origin
+            };
+        } else if (typeof settings.url === "undefined") {
+            throw "Url property must be specified in mathquill_editor_config";
+        } else if (typeof settings.origin === "undefined") {
+            throw "Origin property must be specified in mathquill_editor_config";
+        }
+
+        console.log("add command mathquill-window", data);
+        var iframe = editor.windowManager.openUrl({
+            url: settings.url,
+            title: "Equation Editor",
+            width: 820,
+            height: 400
+        });
+        iframe = document.querySelector("iframe[src='equation_editor.html']");
+        setTimeout(() => {
+            iframe.contentWindow.postMessage(
+                {
+                    mathquill_editor_group:
+                        editor.settings.mathquill_editor_group,
+                    mathquill_editor_button_bar:
+                        editor.settings.mathquill_editor_button_bar,
+                    mathquill_editor_button_groups:
+                        editor.settings.mathquill_editor_button_groups
+                },
+                settings.origin
+            );
+        }, 1000);
     });
 
     editor.ui.registry.addButton("mathquill-editor", {

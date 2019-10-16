@@ -160,6 +160,16 @@
         </div>
 
         <script>
+            if (window.addEventListener) {
+                // For standards-compliant web browsers
+                window.addEventListener("message", getMessage, false);
+            } else {
+                window.attachEvent("onmessage", getMessage);
+            }
+            function getMessage(evt) {
+                console.log("received", evt.data);
+            }
+
             var mathFieldSpan = document.getElementById("math-field");
             var latexSpan = document.getElementById("latex");
 
