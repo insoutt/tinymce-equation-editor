@@ -31,8 +31,8 @@ var app = new Vue({
         initMathquill() {
             var mathFieldSpan = document.getElementById("math-field");
             var latexSpan = document.getElementById("latex");
+            var MQ = MathQuill.getInterface(2); // for backcompat
 
-            window.MQ = MathQuill.getInterface(2); // for backcompat
             this.mathField = MQ.MathField(mathFieldSpan, {
                 spaceBehavesLikeTab: true, // configurable
                 handlers: {
@@ -45,7 +45,6 @@ var app = new Vue({
             });
         },
         insert(button) {
-            console.log("button", button);
             if (button.cmd) {
                 this.mathField.cmd(button.latex);
             } else {
@@ -58,6 +57,7 @@ var app = new Vue({
             window.parent.postMessage(
                 {
                     mceAction: "mathquill-update",
+                    html: this.mathField.html(),
                     latex: this.latex
                 },
                 "*"
