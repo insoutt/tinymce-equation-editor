@@ -529,12 +529,12 @@ const setup = (editor, url) => {
                         },
                         {
                             cmd: false,
-                            text: "\\lim_{x \\to \\infty}",
+                            latex: "\\lim_{x \\to \\infty}",
                             text: "\\lim"
                         },
                         {
                             cmd: false,
-                            text: "\\sum_{i=1}^{n}",
+                            latex: "\\sum_{i=1}^{n}",
                             text: "\\sum"
                         },
                         {
