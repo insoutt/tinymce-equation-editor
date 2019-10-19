@@ -12,23 +12,7 @@ interface Group {
 const setup = (editor, url) => {
 
     editor.on("init", () => {
-        let document = editor.getDoc();
-        var mq = document.getElementsByClassName("mq-math-mode");
-        
-        // Add onclick listener to all mathquill content
-        for (let i = 0; i < mq.length; i++) {
-            const mqBox = mq[i];
-            mqBox.onclick = event => {
-                event.stopPropagation();
-                editor.execCommand(
-                    "mathquill-window",
-                    {
-                        latex: event.currentTarget.dataset.latex,
-                        currentTarget: event.currentTarget,
-                    }
-                );
-            };
-        }
+        setOnClickMathquillContent(editor);
     });
 
     editor.addCommand("mathquill-window", function(data:object = {}) {
@@ -205,7 +189,9 @@ const setup = (editor, url) => {
             console.log('data.currentTarget', data.currentTarget);
             editor.selection.select(data.currentTarget);
         }
-        return editor.selection.setContent(htmlLatex);
+        editor.selection.setContent(htmlLatex);
+        setOnClickMathquillContent(editor);
+
     });
 
     editor.ui.registry.addButton("mathquill-editor", {
@@ -220,3 +206,25 @@ const setup = (editor, url) => {
 export default () => {
     tinymce.PluginManager.add("mathquill-editor", setup);
 };
+
+function setOnClickMathquillContent(editor) {
+    let document = editor.getDoc();
+    var mq = document.getElementsByClassName("mq-math-mode");
+    // Add onclick listener to all mathquill content
+    for (let i = 0; i < mq.length; i++) {
+        const mathquillContent = mq[i];
+
+        if(mathquillContent.onclick) continue;  
+
+        mathquillContent.onclick = event => {
+            event.stopPropagation();
+            editor.execCommand(
+                "mathquill-window",
+                {
+                    latex: event.currentTarget.dataset.latex,
+                    currentTarget: event.currentTarget,
+                }
+            );       
+        };
+    }
+}
