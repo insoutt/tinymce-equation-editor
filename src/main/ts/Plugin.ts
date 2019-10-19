@@ -26,12 +26,15 @@ const setup = (editor, url) => {
         if (typeof settings === "undefined") {
             settings = {
                 url: "equation_editor.html",
-                origin: document.location.origin
+                origin: document.location.origin,
+                title: "Equation Editor",
             };
         } else if (typeof settings.url === "undefined") {
             throw "Url property must be specified in mathquill_editor_config";
         } else if (typeof settings.origin === "undefined") {
             throw "Origin property must be specified in mathquill_editor_config";
+        } else if (typeof settings.title !== "string") {
+            throw "Title property must be specified in mathquill_editor_config and has to be string";
         }
 
         if (typeof groups === "undefined") {
@@ -96,7 +99,7 @@ const setup = (editor, url) => {
 
         var iframe = editor.windowManager.openUrl({
             url: settings.url,
-            title: "Equation Editor",
+            title: settings.title,
             width: 820,
             height: 400,
             buttons: [
