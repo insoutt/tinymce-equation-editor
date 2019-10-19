@@ -6,13 +6,9 @@
         <script type="text/javascript" src="mathquill/mathquill.js"></script>
         <link rel="stylesheet" type="text/css" href="mathquill/mathquill.css" />
         <link rel="stylesheet" type="text/css" href="css/equation_editor.css" />
-        <script
-            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"
-        ></script>
+        <!-- dev script -->
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <!-- production version, optimized for size and speed -->
+        <!-- use this in production -->
         <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
     </head>
 
@@ -24,7 +20,7 @@
                     <button
                         @click="insert(button)"
                         v-for="button in buttonBar"
-                        class="btn btn-outline-dark"
+                        class="btn"
                     >
                         {{ button.text }}
                     </button>

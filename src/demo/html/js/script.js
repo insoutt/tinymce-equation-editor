@@ -1,3 +1,4 @@
+var MQ = MathQuill.getInterface(2);
 var app = new Vue({
     el: "#app",
     data: {
@@ -40,8 +41,6 @@ var app = new Vue({
 
         initMathquill() {
             var mathFieldSpan = document.getElementById("math-field");
-            var MQ = MathQuill.getInterface(2); // for backcompat
-
             this.mathField = MQ.MathField(mathFieldSpan, {
                 spaceBehavesLikeTab: true, // configurable
                 handlers: {
@@ -74,6 +73,13 @@ var app = new Vue({
                 },
                 "*"
             );
+        }
+    },
+
+    updated() {
+        let btns = document.getElementsByClassName("btn");
+        for (let i = 0; i < btns.length; i++) {
+            MQ.MathField(btns[i]);
         }
     }
 });
