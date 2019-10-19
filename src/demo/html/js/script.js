@@ -25,6 +25,7 @@ var app = new Vue({
             this.buttonBar = data.mathquill_editor_button_bar;
             this.buttonGroups = data.mathquill_editor_button_groups;
             this.currentGroup = this.buttonGroups[this.defaultGroup];
+            this.latex = data.latex;
             this.initMathquill();
         },
 
@@ -43,6 +44,11 @@ var app = new Vue({
                     }
                 }
             });
+            
+            if (this.latex) {
+                this.mathField.latex(this.latex);
+                console.log('set content 2', this.latex);
+            }
         },
         insert(button) {
             if (button.cmd) {

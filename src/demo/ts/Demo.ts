@@ -4,8 +4,8 @@ declare let tinymce: any;
 
 Plugin();
 
-init("div.inline", true);
 init("textarea.tinymce", false);
+init("div.inline", true);
 
 function init(selector, inline: boolean) {
     tinymce.init({
@@ -13,6 +13,7 @@ function init(selector, inline: boolean) {
         inline: inline,
         plugins: "code mathquill-editor",
         toolbar: "mathquill-editor",
+        content_css: "mathquill/mathquill.css",
         mathquill_editor_group: "basic",
         //mathquill_editor_button_bar: "\\times y^2",
         mathquill_editor_button_bar: [

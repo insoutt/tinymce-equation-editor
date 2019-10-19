@@ -10,11 +10,30 @@ interface Group {
 }
 
 const setup = (editor, url) => {
-    editor.addCommand("mathquill-window", function(data) {
+    var editing = null;
+
+    editor.on("init", () => {
+        let document = editor.getDoc();
+        var mq = document.getElementsByClassName("mq-math-mode");
+        
+        // Add onclick listener to all mathquill content
+        for (let i = 0; i < mq.length; i++) {
+            const mqBox = mq[i];
+            mqBox.onclick = event => {
+                editor.execCommand(
+                    "mathquill-window",
+                    event.currentTarget.dataset.latex
+                );
+            };
+        }
+    });
+
+    editor.addCommand("mathquill-window", function(latex:string = '') {
         let settings = editor.settings.mathquill_editor_config;
         let groups = editor.settings.mathquill_editor_button_groups;
         let btnBar = editor.settings.mathquill_editor_button_bar;
-        var latex = "";
+        var htmlLatex = "";
+
         if (typeof settings === "undefined") {
             settings = {
                 url: "equation_editor.html",
@@ -86,7 +105,6 @@ const setup = (editor, url) => {
             btnBar = "\\times y^2";
         }
 
-        console.log("add command mathquill-window", data);
         var iframe = editor.windowManager.openUrl({
             url: settings.url,
             title: "Equation Editor",
@@ -104,12 +122,16 @@ const setup = (editor, url) => {
                 }
             ],
             onAction: () => {
+                editor.execCommand("mathquill-insert", {
+                    html: htmlLatex,
+                    latex: latex
+                });
                 editor.windowManager.close();
-                console.log("latex", latex);
             },
             onMessage: (instance, data) => {
                 switch (data.mceAction) {
                     case "mathquill-update":
+                        htmlLatex = data.html;
                         latex = data.latex;
                         break;
                 }
@@ -156,11 +178,30 @@ const setup = (editor, url) => {
                     mathquill_editor_group:
                         editor.settings.mathquill_editor_group,
                     mathquill_editor_button_bar: buttonBar,
-                    mathquill_editor_button_groups: buttonGroups
+                    mathquill_editor_button_groups: buttonGroups,
+                    latex: latex
                 },
                 settings.origin
             );
         };
+    });
+
+    editor.addCommand("mathquill-insert", mathquillData => {
+        if (!mathquillData) {
+            return;
+        }
+
+        // Add div.mq-math-mode
+        let htmlLatex = `
+            <div class='mq-math-mode' data-latex='${mathquillData.latex}'>
+                ${mathquillData.html}
+            </div>`;
+
+        if (editing) {
+            editor.selection.select(editing);
+        }
+        editing = null;
+        return editor.selection.setContent(htmlLatex);
     });
 
     editor.ui.registry.addButton("mathquill-editor", {
