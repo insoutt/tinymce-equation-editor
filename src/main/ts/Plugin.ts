@@ -11,22 +11,43 @@ interface Group {
 
 const setup = (editor, url) => {
     var settings = editor.settings.mathquill_editor_config;
+
+    // mathquill_editor_config
     if (typeof settings === "undefined") {
-            settings = {
-                url: "equation_editor.html",
-                origin: document.location.origin,
-                title: "Equation Editor",
-                space_after_content: '&nbsp;',
-            };
-        } else if (typeof settings.url !== "string") {
-            throw "Url property must be string in mathquill_editor_config and has to be string";
-        } else if (typeof settings.origin !== "string") {
-            throw "Origin property must be string in mathquill_editor_config and has to be string";
-        } else if (typeof settings.title !== "string") {
-            throw "Title property must be string in mathquill_editor_config and has to be string";
-        } else if (typeof settings.space_after_content === "undefined") {
-            settings.space_after_content = '&nbsp;';
-        }
+        settings = {};
+    } else if (typeof settings !== "object") {
+        throw "'mathquill_editor_config' property must be an object";
+    }
+
+    // url
+    if (typeof settings.url === "undefined") {
+        settings.url = "equation_editor.html";
+    } else if (typeof settings.url === "undefined") {
+        throw "'url' property must be a string in mathquill_editor_config";
+    }
+
+    // origin
+    if (typeof settings.origin === "undefined") {
+        settings.origin = document.location.origin;
+    } else if (typeof settings.origin === "undefined") {
+        throw "'origin' property must be a string in mathquill_editor_config";
+    }
+
+    // title
+    if (typeof settings.title === "undefined") {
+        settings.title = "Equation Editor";
+    } else if (typeof settings.title === "undefined") {
+        throw "'title' property must be a string in mathquill_editor_config";
+    }
+
+    // space_after_content
+    if (typeof settings.space_after_content === "undefined") {
+        settings.space_after_content = "&nbsp;";
+    } else if (typeof settings.space_after_content === "undefined") {
+        throw "'space_after_content' property must be a string in mathquill_editor_config";
+    }
+
+    
 
     //----- Events -----//
     editor.on("init", () => {
@@ -152,7 +173,7 @@ const setup = (editor, url) => {
                 if (typeof group.name === "undefined") {
                     throw "You must define group name property";
                 } else if (typeof group.name !== "string") {
-                    throw "Group name must be string";
+                    throw "Group name must be a string";
                 } else if (typeof group.buttons === "undefined") {
                     throw "You must define buttons property";
                 }
