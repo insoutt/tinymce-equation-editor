@@ -11,10 +11,12 @@ interface Group {
 
 const setup = (editor, url) => {
 
+    //----- Events -----//
     editor.on("init", () => {
         setOnClickMathquillContent(editor);
     });
 
+    //----- Commands -----//
     editor.addCommand("mathquill-window", function(data:object = {}) {
         let settings = editor.settings.mathquill_editor_config;
         let groups = editor.settings.mathquill_editor_button_groups;
@@ -194,6 +196,8 @@ const setup = (editor, url) => {
 
     });
 
+
+    // Register button 
     editor.ui.registry.addButton("mathquill-editor", {
         title: "Editor de ecuaciones",
         text: "f(x)",
@@ -201,6 +205,8 @@ const setup = (editor, url) => {
             editor.execCommand("mathquill-window");
         }
     });
+
+    
 };
 
 export default () => {
@@ -213,6 +219,8 @@ function setOnClickMathquillContent(editor) {
     // Add onclick listener to all mathquill content
     for (let i = 0; i < mq.length; i++) {
         const mathquillContent = mq[i];
+        
+        mathquillContent.contentEditable = "false";
 
         if(mathquillContent.onclick) continue;  
 
