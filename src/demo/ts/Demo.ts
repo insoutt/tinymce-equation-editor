@@ -9,8 +9,8 @@ init('div.inline', true);
 
 function init(selector, inline: boolean) {
     tinymce.init({
-        selector: selector,
-        inline: inline,
+        selector,
+        inline,
         plugins: 'code mathquill-editor',
         toolbar: 'mathquill-editor',
         content_css: 'mathquill/mathquill.css',

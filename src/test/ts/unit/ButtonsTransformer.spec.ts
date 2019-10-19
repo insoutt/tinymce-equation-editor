@@ -1,11 +1,8 @@
 import { expect, assert } from 'chai';
 import ButtonsTransformer from '../../../main/ts/ButtonsTransformer';
-require('ts-node').register({
-    project: null,
-});
 
-describe('Test ButtonsTransformer', function() {
-    it('check string to array', function() {
+describe('Test ButtonsTransformer', function () {
+    it('check string to array', function () {
         const transformer = new ButtonsTransformer('+ \\times');
 
         expect(transformer.transform()).to.eql([
@@ -22,7 +19,7 @@ describe('Test ButtonsTransformer', function() {
         ]);
     });
 
-    it('check array transform without cmd', function() {
+    it('check array transform without cmd', function () {
         const transformer = new ButtonsTransformer([
             {
                 text: 'y^x',
@@ -48,7 +45,7 @@ describe('Test ButtonsTransformer', function() {
         ]);
     });
 
-    it('check array transform with cmd', function() {
+    it('check array transform with cmd', function () {
         const transformer = new ButtonsTransformer([
             {
                 text: 'y^x',
@@ -76,7 +73,7 @@ describe('Test ButtonsTransformer', function() {
         ]);
     });
 
-    it('check array transform adds latex property', function() {
+    it('check array transform adds latex property', function () {
         const transformer = new ButtonsTransformer([
             {
                 text: 'y^x',
@@ -100,7 +97,7 @@ describe('Test ButtonsTransformer', function() {
         ]);
     });
 
-    it('check array transform remove keys', function() {
+    it('check array transform remove keys', function () {
         const transformer = new ButtonsTransformer([
             {
                 text: 'y^x',
@@ -127,8 +124,8 @@ describe('Test ButtonsTransformer', function() {
     });
 });
 
-describe('Test ButtonsTransformer fails', function() {
-    it('check empty string', function() {
+describe('Test ButtonsTransformer fails', function () {
+    it('check empty string', function () {
         const transformer = new ButtonsTransformer('');
         assert.throws(
             () => transformer.transform(),
@@ -136,7 +133,7 @@ describe('Test ButtonsTransformer fails', function() {
         );
     });
 
-    it('constructor must be string or array', function() {
+    it('constructor must be string or array', function () {
         const transformer = new ButtonsTransformer(1);
         assert.throws(
             () => transformer.transform(),
@@ -144,7 +141,7 @@ describe('Test ButtonsTransformer fails', function() {
         );
     });
 
-    it('array without buttons', function() {
+    it('array without buttons', function () {
         const transformer = new ButtonsTransformer([]);
         assert.throws(
             () => transformer.transform(),
@@ -152,7 +149,7 @@ describe('Test ButtonsTransformer fails', function() {
         );
     });
 
-    it('buttons without text propery', function() {
+    it('buttons without text propery', function () {
         const transformer = new ButtonsTransformer([
             {},
             { latex: '1' },
@@ -164,7 +161,7 @@ describe('Test ButtonsTransformer fails', function() {
         );
     });
 
-    it('text propery as int', function() {
+    it('text propery as int', function () {
         const transformer = new ButtonsTransformer([{ text: 1 }]);
         assert.throws(
             () => transformer.transform(),
@@ -172,7 +169,7 @@ describe('Test ButtonsTransformer fails', function() {
         );
     });
 
-    it('cmd propery as int', function() {
+    it('cmd propery as int', function () {
         const transformer = new ButtonsTransformer([{ text: '1', cmd: 1 }]);
         assert.throws(
             () => transformer.transform(),
@@ -180,7 +177,7 @@ describe('Test ButtonsTransformer fails', function() {
         );
     });
 
-    it('cmd propery as object', function() {
+    it('cmd propery as object', function () {
         const transformer = new ButtonsTransformer([{ text: '1', cmd: {} }]);
         assert.throws(
             () => transformer.transform(),
@@ -188,7 +185,7 @@ describe('Test ButtonsTransformer fails', function() {
         );
     });
 
-    it('text propery as object', function() {
+    it('text propery as object', function () {
         const transformer = new ButtonsTransformer([{ text: {} }]);
         assert.throws(
             () => transformer.transform(),
@@ -196,7 +193,7 @@ describe('Test ButtonsTransformer fails', function() {
         );
     });
 
-    it('latex propery as int', function() {
+    it('latex propery as int', function () {
         const transformer = new ButtonsTransformer([{ text: '1', latex: 1 }]);
         assert.throws(
             () => transformer.transform(),
@@ -204,7 +201,7 @@ describe('Test ButtonsTransformer fails', function() {
         );
     });
 
-    it('latex propery as object', function() {
+    it('latex propery as object', function () {
         const transformer = new ButtonsTransformer([{ text: '1', latex: {} }]);
         assert.throws(
             () => transformer.transform(),
@@ -212,7 +209,7 @@ describe('Test ButtonsTransformer fails', function() {
         );
     });
 
-    it('button as int', function() {
+    it('button as int', function () {
         const transformer = new ButtonsTransformer([1]);
         assert.throws(
             () => transformer.transform(),
@@ -220,7 +217,7 @@ describe('Test ButtonsTransformer fails', function() {
         );
     });
 
-    it('button is not an object ', function() {
+    it('button is not an object ', function () {
         const transformer = new ButtonsTransformer([{ text: '1' }, 1, '']);
         assert.throws(
             () => transformer.transform(),

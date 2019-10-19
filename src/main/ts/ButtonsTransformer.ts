@@ -6,28 +6,28 @@ export interface ButtonConfig {
 }
 
 export default class ButtonsTransformer {
-    buttons: any;
-    readonly SEPARATOR = ' ';
+    private buttons: any;
+    private readonly SEPARATOR = ' ';
     constructor(buttons: any) {
         this.buttons = buttons;
     }
 
-    transform(): Array<ButtonConfig> {
+    public transform(): Array<ButtonConfig> {
         if (typeof this.buttons === 'string') {
             return this.parseString();
         } else if (this.buttons instanceof Array) {
             return this.parseArray();
         } else {
-            throw 'Buttons must be a string or array';
+            throw new Error('Buttons must be a string or array');
         }
     }
 
     private parseArray(): Array<ButtonConfig> {
         if (this.buttons.length === 0) {
-            throw 'You must define at least one button';
+            throw new Error('You must define at least one button');
         }
-        return this.buttons.map(button => {
-            let btn: ButtonConfig = {
+        return this.buttons.map((button) => {
+            const btn: ButtonConfig = {
                 text: '',
                 latex: '',
                 cmd: false,
@@ -35,11 +35,11 @@ export default class ButtonsTransformer {
 
             // Text property
             if (typeof button !== 'object') {
-                throw 'Button must be an object';
+                throw new Error('Button must be an object');
             } else if (typeof button.text === 'undefined') {
-                throw 'You must define text property of button';
+                throw new Error('You must define text property of button');
             } else if (typeof button.text !== 'string') {
-                throw 'text property of button must be a string';
+                throw new Error('text property of button must be a string');
             } else {
                 btn.text = button.text;
             }
@@ -48,7 +48,7 @@ export default class ButtonsTransformer {
             if (typeof button.latex === 'undefined') {
                 btn.latex = button.text;
             } else if (typeof button.latex !== 'string') {
-                throw 'latex property of button must be a string';
+                throw new Error('latex property of button must be a string');
             } else {
                 btn.latex = button.latex;
             }
@@ -57,7 +57,7 @@ export default class ButtonsTransformer {
             if (typeof button.cmd === 'undefined') {
                 btn.cmd = false;
             } else if (typeof button.cmd !== 'boolean') {
-                throw 'cmd property must be boolean';
+                throw new Error('cmd property must be boolean');
             } else {
                 btn.cmd = button.cmd;
             }
@@ -67,11 +67,11 @@ export default class ButtonsTransformer {
 
     private parseString(): Array<ButtonConfig> {
         if (this.buttons.length === 0) {
-            throw 'You must define at least 1 button';
+            throw new Error('You must define at least 1 button');
         }
-        let buttonsArray = this.buttons.split(this.SEPARATOR);
+        const buttonsArray = this.buttons.split(this.SEPARATOR);
 
-        return buttonsArray.map(button => {
+        return buttonsArray.map((button) => {
             return {
                 text: button,
                 latex: button,

@@ -1,5 +1,4 @@
-import ButtonsTransformer from './ButtonsTransformer';
-import { ButtonConfig } from './ButtonsTransformer';
+import ButtonsTransformer, { ButtonConfig } from './ButtonsTransformer';
 
 declare const tinymce: any;
 declare const document: any;
@@ -15,66 +14,66 @@ interface DataMathquillWindow {
 }
 
 const setup = (editor, url) => {
-    var settings = editor.settings.mathquill_editor_config;
+    let settings = editor.settings.mathquill_editor_config;
 
     // mathquill_editor_config
     if (typeof settings === 'undefined') {
         settings = {};
     } else if (typeof settings !== 'object') {
-        throw '\'mathquill_editor_config\' property must be an object';
+        throw new Error('\'mathquill_editor_config\' property must be an object');
     }
 
     // url
     if (typeof settings.url === 'undefined') {
         settings.url = 'equation_editor.html';
     } else if (typeof settings.url === 'undefined') {
-        throw '\'url\' property must be a string in mathquill_editor_config';
+        throw new Error('\'url\' property must be a string in mathquill_editor_config');
     }
 
     // origin
     if (typeof settings.origin === 'undefined') {
         settings.origin = document.location.origin;
     } else if (typeof settings.origin === 'undefined') {
-        throw '\'origin\' property must be a string in mathquill_editor_config';
+        throw new Error('\'origin\' property must be a string in mathquill_editor_config');
     }
 
     // title
     if (typeof settings.title === 'undefined') {
         settings.title = 'Equation Editor';
     } else if (typeof settings.title === 'undefined') {
-        throw '\'title\' property must be a string in mathquill_editor_config';
+        throw new Error('\'title\' property must be a string in mathquill_editor_config');
     }
 
     // space_after_content
     if (typeof settings.space_after_content === 'undefined') {
         settings.space_after_content = '&nbsp;';
     } else if (typeof settings.space_after_content === 'undefined') {
-        throw '\'space_after_content\' property must be a string in mathquill_editor_config';
+        throw new Error('\'space_after_content\' property must be a string in mathquill_editor_config');
     }
 
     // btn_cancel_text
     if (typeof settings.btn_cancel_text === 'undefined') {
         settings.btn_cancel_text = 'Cancel';
     } else if (typeof settings.btn_cancel_text === 'undefined') {
-        throw '\'btn_cancel_text\' property must be a string in mathquill_editor_config';
+        throw new Error('\'btn_cancel_text\' property must be a string in mathquill_editor_config');
     }
 
     // btn_ok_text
     if (typeof settings.btn_ok_text === 'undefined') {
         settings.btn_ok_text = 'Insert';
     } else if (typeof settings.btn_ok_text === 'undefined') {
-        throw '\'btn_ok_text\' property must be a string in mathquill_editor_config';
+        throw new Error('\'btn_ok_text\' property must be a string in mathquill_editor_config');
     }
 
     let groups = editor.settings.mathquill_editor_button_groups;
     let btnBar = editor.settings.mathquill_editor_button_bar;
     let groupName = editor.settings.mathquill_editor_group;
-    var htmlLatex = '';
+    let htmlLatex = '';
 
     if (typeof groupName === 'undefined') {
         groupName = 'basic';
     } else if (typeof groupName !== 'string') {
-        throw '\'mathquill_editor_group\' property must be a string';
+        throw new Error('\'mathquill_editor_group\' property must be a string');
     }
 
     if (typeof groups === 'undefined') {
@@ -587,16 +586,16 @@ const setup = (editor, url) => {
         ];
     }
 
-    //----- Events -----//
+    // ----- Events ----- //
     editor.on('init', () => {
         setOnClickMathquillContent(editor);
     });
 
-    //----- Commands -----//
-    editor.addCommand('mathquill-window', function(
+    // ----- Commands ----- //
+    editor.addCommand('mathquill-window', function (
         data: DataMathquillWindow = {}
     ) {
-        var iframe = editor.windowManager.openUrl({
+        let iframe = editor.windowManager.openUrl({
             url: settings.url,
             title: settings.title,
             width: 820,
@@ -632,35 +631,35 @@ const setup = (editor, url) => {
         iframe = document.querySelector('iframe[src=\'' + settings.url + '\']');
         const buttonBar = new ButtonsTransformer(btnBar).transform();
 
-        for (const groupName in groups) {
-            if (!groups.hasOwnProperty(groupName)) continue;
+        for (const name in groups) {
+            if (!groups.hasOwnProperty(name)) { continue; }
 
-            let buttonGroup = groups[groupName];
+            const buttonGroup = groups[name];
 
             if (!(buttonGroup instanceof Array)) {
-                throw 'Groups must be an array ';
+                throw new Error('Groups must be an array ');
             }
 
-            let transformGroup: Array<Group> = buttonGroup.map(group => {
+            const transformGroup: Array<Group> = buttonGroup.map((group) => {
                 if (typeof group.name === 'undefined') {
-                    throw 'You must define group name property';
+                    throw new Error('You must define group name property');
                 } else if (typeof group.name !== 'string') {
-                    throw 'Group name must be a string';
+                    throw new Error('Group name must be a string');
                 } else if (typeof group.buttons === 'undefined') {
-                    throw 'You must define buttons property';
+                    throw new Error('You must define buttons property');
                 }
 
-                let buttons = new ButtonsTransformer(group.buttons).transform();
+                const buttons = new ButtonsTransformer(group.buttons).transform();
                 return {
                     name: group.name,
-                    buttons: buttons,
+                    buttons,
                 };
             });
 
-            groups[groupName] = transformGroup;
+            groups[name] = transformGroup;
         }
 
-        iframe.onload = function() {
+        iframe.onload = function () {
             iframe.contentWindow.postMessage(
                 {
                     mathquill_editor_group: groupName,
@@ -673,22 +672,21 @@ const setup = (editor, url) => {
         };
     });
 
-    editor.addCommand('mathquill-insert', data => {
+    editor.addCommand('mathquill-insert', (data) => {
         if (!data) {
             return;
         }
 
         // Add span.mq-math-mode
-        let htmlLatex = `
+        const content = `
             <span class='mq-math-mode' data-latex='${data.latex}'>
                 ${data.html}
             </span>${settings.space_after_content}`;
 
         if (data.currentTarget) {
-            console.log('data.currentTarget', data.currentTarget);
             editor.selection.select(data.currentTarget);
         }
-        editor.selection.setContent(htmlLatex);
+        editor.selection.setContent(content);
         setOnClickMathquillContent(editor);
     });
 
@@ -707,20 +705,15 @@ export default () => {
 };
 
 function setOnClickMathquillContent(editor) {
-    let document = editor.getDoc();
-    var mq = document.getElementsByClassName('mq-math-mode');
-    console.log('elements', mq);
+    const tinymceDoc = editor.getDoc();
+    const mqSpan = tinymceDoc.getElementsByClassName('mq-math-mode');
 
     // Add onclick listener to all mathquill content
-    for (let i = 0; i < mq.length; i++) {
-        const mathquillContent = mq[i];
-
+    for (const mathquillContent of mqSpan) {
         mathquillContent.contentEditable = 'false';
-        if (mathquillContent.onclick) continue;
+        if (mathquillContent.onclick) { continue; }
 
-        mathquillContent.onclick = event => {
-            console.log('click', event);
-
+        mathquillContent.onclick = (event) => {
             event.stopPropagation();
             editor.execCommand('mathquill-window', {
                 latex: event.currentTarget.dataset.latex,
