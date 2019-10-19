@@ -18,6 +18,15 @@ var app = new Vue({
     },
 
     methods: {
+        collapse(event) {
+            event.target.classList.toggle("active");
+            var content = event.target.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        },
         getParams(evt) {
             let data = evt.data;
             console.log("received", data);
@@ -31,23 +40,20 @@ var app = new Vue({
 
         initMathquill() {
             var mathFieldSpan = document.getElementById("math-field");
-            var latexSpan = document.getElementById("latex");
             var MQ = MathQuill.getInterface(2); // for backcompat
 
             this.mathField = MQ.MathField(mathFieldSpan, {
                 spaceBehavesLikeTab: true, // configurable
                 handlers: {
                     edit: () => {
-                        latexSpan.textContent = this.mathField.latex(); // simple API
                         this.latex = this.mathField.latex();
                         this.sendLatex();
                     }
                 }
             });
-            
+
             if (this.latex) {
                 this.mathField.latex(this.latex);
-                console.log('set content 2', this.latex);
             }
         },
         insert(button) {

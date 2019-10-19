@@ -6,12 +6,6 @@
         <script type="text/javascript" src="mathquill/mathquill.js"></script>
         <link rel="stylesheet" type="text/css" href="mathquill/mathquill.css" />
         <link rel="stylesheet" type="text/css" href="css/equation_editor.css" />
-        <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-            crossorigin="anonymous"
-        />
         <script
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
@@ -23,71 +17,37 @@
     </head>
 
     <body>
-        <div id="app" class="container-fluid">
-            <div class="row">
-                <div class="col-8">
-                    <!-- Button Bar -->
-                    <div class="btn-container">
-                        <button
-                            @click="insert(button)"
-                            v-for="button in buttonBar"
-                            class="btn btn-outline-dark"
-                        >
-                            {{ button.text }}
-                        </button>
-                    </div>
-                    <!-- Editor -->
-                    <div id="math-field" class="mathquill-editor"></div>
+        <div id="app" class="container">
+            <div class="col-1">
+                <!-- Button Bar -->
+                <div class="btn-container m-0">
+                    <button
+                        @click="insert(button)"
+                        v-for="button in buttonBar"
+                        class="btn btn-outline-dark"
+                    >
+                        {{ button.text }}
+                    </button>
                 </div>
-                <div class="col-4">
-                    <!-- Collapse -->
-                    <div class="accordion" id="accordionMain">
-                        <div
-                            v-for="(group, index) in currentGroup"
-                            class="card"
-                        >
-                            <div
-                                class="card-header p-0"
-                                :id="'heading' + index"
+                <!-- Editor -->
+                <div id="math-field" class="mathquill-editor"></div>
+            </div>
+            <div class="col-2">
+                <div v-for="(group, index) in currentGroup">
+                    <button @click="collapse" class="collapsible">
+                        {{ group.name }}
+                    </button>
+                    <div class="content">
+                        <div class="btn-container">
+                            <button
+                                @click="insert(button)"
+                                v-for="button in group.buttons"
+                                class="btn"
                             >
-                                <!-- Collapse Heading -->
-                                <h2 class="mb-0">
-                                    <button
-                                        class="btn btn-link"
-                                        type="button"
-                                        :data-target="'#collapse' + index"
-                                        data-toggle="collapse"
-                                        aria-expanded="true"
-                                    >
-                                        {{ group.name }}
-                                    </button>
-                                </h2>
-                            </div>
-
-                            <div
-                                :id="'collapse' + index"
-                                class="collapse"
-                                data-parent="#accordionMain"
-                            >
-                                <!-- Collapse content -->
-                                <div class="card-body p-2">
-                                    <div class="btn-container">
-                                        <button
-                                            @click="insert(button)"
-                                            v-for="button in group.buttons"
-                                            class="btn btn-outline-dark"
-                                        >
-                                            {{ button.text }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                                {{ button.text }}
+                            </button>
                         </div>
                     </div>
-                </div>
-                <div class="col-12">
-                    <!-- Latex content -->
-                    <div class="d-none" id="latex"></div>
                 </div>
             </div>
         </div>
