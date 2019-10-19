@@ -38,12 +38,12 @@ tinymce.init({
 	plugins: ["mathquill-editor"],
     toolbar: "mathquill-editor",
     mathquill_editor_config: {
-        url = 'editor/equation_editor.html',
-        origin = document.location.origin,
-        title = 'Equation Editor',
-        space_after_content = '&nbsp;',
-        btn_cancel_text = 'Cancel',
-        btn_ok_text = 'Insert',
+        url: 'editor/equation_editor.html',
+        origin: document.location.origin,
+        title: 'Equation Editor',
+        space_after_content: '&nbsp;',
+        btn_cancel_text: 'Cancel',
+        btn_ok_text: 'Insert',
     },
     mathquill_editor_group: 'basic',
     mathquill_editor_button_groups: {
