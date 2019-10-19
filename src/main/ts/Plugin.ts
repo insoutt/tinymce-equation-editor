@@ -10,6 +10,23 @@ interface Group {
 }
 
 const setup = (editor, url) => {
+    var settings = editor.settings.mathquill_editor_config;
+    if (typeof settings === "undefined") {
+            settings = {
+                url: "equation_editor.html",
+                origin: document.location.origin,
+                title: "Equation Editor",
+                space_after_content: '&nbsp;',
+            };
+        } else if (typeof settings.url !== "string") {
+            throw "Url property must be string in mathquill_editor_config and has to be string";
+        } else if (typeof settings.origin !== "string") {
+            throw "Origin property must be string in mathquill_editor_config and has to be string";
+        } else if (typeof settings.title !== "string") {
+            throw "Title property must be string in mathquill_editor_config and has to be string";
+        } else if (typeof settings.space_after_content === "undefined") {
+            settings.space_after_content = '&nbsp;';
+        }
 
     //----- Events -----//
     editor.on("init", () => {
@@ -18,24 +35,9 @@ const setup = (editor, url) => {
 
     //----- Commands -----//
     editor.addCommand("mathquill-window", function(data:object = {}) {
-        let settings = editor.settings.mathquill_editor_config;
         let groups = editor.settings.mathquill_editor_button_groups;
         let btnBar = editor.settings.mathquill_editor_button_bar;
         var htmlLatex = "";
-
-        if (typeof settings === "undefined") {
-            settings = {
-                url: "equation_editor.html",
-                origin: document.location.origin,
-                title: "Equation Editor",
-            };
-        } else if (typeof settings.url === "undefined") {
-            throw "Url property must be specified in mathquill_editor_config";
-        } else if (typeof settings.origin === "undefined") {
-            throw "Origin property must be specified in mathquill_editor_config";
-        } else if (typeof settings.title !== "string") {
-            throw "Title property must be specified in mathquill_editor_config and has to be string";
-        }
 
         if (typeof groups === "undefined") {
             groups = {
@@ -188,7 +190,7 @@ const setup = (editor, url) => {
         let htmlLatex = `
             <div class='mq-math-mode' data-latex='${data.latex}'>
                 ${data.html}
-            </div>`;
+            </div>${settings.space_after_content}`;
 
         if (data.currentTarget) {
             console.log('data.currentTarget', data.currentTarget);
