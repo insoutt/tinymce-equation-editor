@@ -207,11 +207,11 @@ const setup = (editor, url) => {
             return;
         }
 
-        // Add div.mq-math-mode
+        // Add span.mq-math-mode
         let htmlLatex = `
-            <div class='mq-math-mode' data-latex='${data.latex}'>
+            <span class='mq-math-mode' data-latex='${data.latex}'>
                 ${data.html}
-            </div>${settings.space_after_content}`;
+            </span>${settings.space_after_content}`;
 
         if (data.currentTarget) {
             console.log('data.currentTarget', data.currentTarget);
@@ -242,15 +242,18 @@ export default () => {
 function setOnClickMathquillContent(editor) {
     let document = editor.getDoc();
     var mq = document.getElementsByClassName("mq-math-mode");
+    console.log('elements', mq);
+    
     // Add onclick listener to all mathquill content
     for (let i = 0; i < mq.length; i++) {
         const mathquillContent = mq[i];
         
         mathquillContent.contentEditable = "false";
-
         if(mathquillContent.onclick) continue;  
 
         mathquillContent.onclick = event => {
+            console.log('click', event);
+            
             event.stopPropagation();
             editor.execCommand(
                 "mathquill-window",
