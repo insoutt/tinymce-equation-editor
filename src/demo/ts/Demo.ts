@@ -40,8 +40,7 @@ function init(selector, inline: boolean) {
                 },
                 {
                     name: "Arithmetic and Units",
-                    buttons:
-                        "+ - \\times \\div \\pm \\overline \\cdot / $ \\degree %"
+                    buttons: "+ - \\times \\div \\pm \\cdot / $ \\degree %"
                 }
             ],
             intermediate: [
