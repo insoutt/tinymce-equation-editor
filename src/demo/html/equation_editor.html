@@ -33,19 +33,21 @@
                 <div id="math-field" class="mathquill-editor"></div>
             </div>
             <div class="col-2">
-                <div v-for="(group, index) in currentGroup">
-                    <button @click="collapse" class="collapsible">
-                        {{ group.name }}
-                    </button>
-                    <div class="content">
-                        <div class="btn-container">
-                            <button
-                                @click="insert(button)"
-                                v-for="button in group.buttons"
-                                class="btn"
-                            >
-                                {{ button.text }}
-                            </button>
+                <div class="col-2-container">
+                    <div v-for="(group, index) in currentGroup">
+                        <button @click="collapse" class="collapsible">
+                            {{ group.name }}
+                        </button>
+                        <div class="content">
+                            <div class="btn-container">
+                                <button
+                                    @click="insert(button)"
+                                    v-for="button in group.buttons"
+                                    class="btn"
+                                >
+                                    {{ button.text }}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
