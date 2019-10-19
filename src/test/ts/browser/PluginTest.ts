@@ -1,24 +1,42 @@
-import { Pipeline, Logger, GeneralSteps } from '@ephox/agar';
-import { TinyLoader, TinyApis, TinyUi } from '@ephox/mcagar';
-import { UnitTest } from '@ephox/bedrock';
-import Plugin from '../../../main/ts/Plugin';
+import { Pipeline, Logger, GeneralSteps, Step } from "@ephox/agar";
+import { TinyLoader, TinyApis } from "@ephox/mcagar";
+import { UnitTest } from "@ephox/bedrock";
+import Plugin from "../../../main/ts/Plugin";
 
 // This an example of a browser test of the editor.
-UnitTest.asynctest('browser.PluginTest', (success, failure) => {
-  Plugin();
+UnitTest.asynctest("browser.PluginTest", (success, failure) => {
+    Plugin();
 
-  TinyLoader.setup((editor, onSuccess, onFailure) => {
-    const tinyUi = TinyUi(editor);
-    const tinyApis = TinyApis(editor);
+    TinyLoader.setup(
+        (editor, onSuccess, onFailure) => {
+            const tinyApis = TinyApis(editor);
 
-    Pipeline.async({}, [
-      Logger.t('test click on button', GeneralSteps.sequence([
-        tinyUi.sClickOnToolbar('click mathquill-editor button', 'button:contains("mathquill-editor button")'),
-        tinyApis.sAssertContent('<p>content added from mathquill-editor</p>')
-      ]))
-    ], onSuccess, onFailure);
-  }, {
-    plugins: 'mathquill-editor',
-    toolbar: 'mathquill-editor'
-  }, success, failure);
+            Pipeline.async(
+                {},
+                [
+                    Logger.t(
+                        "test mathquill-insert command",
+                        GeneralSteps.sequence([
+                            tinyApis.sExecCommand("mathquill-insert", {
+                                html:
+                                    '<var>y</var><span class="mq-supsub mq-non-leaf mq-sup-only"><span class="mq-sup"><var>x</var></span></span>',
+                                latex: "y^x"
+                            }),
+                            tinyApis.sAssertContent(
+                                '<p><var>y</var><span class="mq-supsub mq-non-leaf mq-sup-only"><span class="mq-sup"><var>x</var></span></span><p>'
+                            )
+                        ])
+                    )
+                ],
+                onSuccess,
+                onFailure
+            );
+        },
+        {
+            plugins: "mathquill-editor",
+            toolbar: "mathquill-editor"
+        },
+        success,
+        failure
+    );
 });
