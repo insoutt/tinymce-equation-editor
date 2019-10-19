@@ -9,6 +9,11 @@ interface Group {
     buttons: Array<ButtonConfig>;
 }
 
+interface DataMathquillWindow {
+    latex?: string;
+    currentTarget?: string;
+}
+
 const setup = (editor, url) => {
     var settings = editor.settings.mathquill_editor_config;
 
@@ -47,7 +52,19 @@ const setup = (editor, url) => {
         throw "'space_after_content' property must be a string in mathquill_editor_config";
     }
 
-    
+    // btn_cancel_text
+    if (typeof settings.btn_cancel_text === "undefined") {
+        settings.btn_cancel_text = "Cancel";
+    } else if (typeof settings.btn_cancel_text === "undefined") {
+        throw "'btn_cancel_text' property must be a string in mathquill_editor_config";
+    }
+
+    // btn_ok_text
+    if (typeof settings.btn_ok_text === "undefined") {
+        settings.btn_ok_text = "Insert";
+    } else if (typeof settings.btn_ok_text === "undefined") {
+        throw "'btn_ok_text' property must be a string in mathquill_editor_config";
+    }
 
     //----- Events -----//
     editor.on("init", () => {
@@ -55,7 +72,9 @@ const setup = (editor, url) => {
     });
 
     //----- Commands -----//
-    editor.addCommand("mathquill-window", function(data:object = {}) {
+    editor.addCommand("mathquill-window", function(
+        data: DataMathquillWindow = {}
+    ) {
         let groups = editor.settings.mathquill_editor_button_groups;
         let btnBar = editor.settings.mathquill_editor_button_bar;
         var htmlLatex = "";
@@ -128,11 +147,11 @@ const setup = (editor, url) => {
             buttons: [
                 {
                     type: "cancel",
-                    text: "cancel"
+                    text: settings.btn_cancel_text
                 },
                 {
                     type: "custom",
-                    text: "insert",
+                    text: settings.btn_ok_text,
                     primary: true
                 }
             ],
@@ -140,7 +159,7 @@ const setup = (editor, url) => {
                 editor.execCommand("mathquill-insert", {
                     html: htmlLatex,
                     latex: data.latex,
-                    currentTarget: data.currentTarget,
+                    currentTarget: data.currentTarget
                 });
                 editor.windowManager.close();
             },
@@ -214,16 +233,14 @@ const setup = (editor, url) => {
             </span>${settings.space_after_content}`;
 
         if (data.currentTarget) {
-            console.log('data.currentTarget', data.currentTarget);
+            console.log("data.currentTarget", data.currentTarget);
             editor.selection.select(data.currentTarget);
         }
         editor.selection.setContent(htmlLatex);
         setOnClickMathquillContent(editor);
-
     });
 
-
-    // Register button 
+    // Register button
     editor.ui.registry.addButton("mathquill-editor", {
         title: "Editor de ecuaciones",
         text: "f(x)",
@@ -231,8 +248,6 @@ const setup = (editor, url) => {
             editor.execCommand("mathquill-window");
         }
     });
-
-    
 };
 
 export default () => {
@@ -242,26 +257,23 @@ export default () => {
 function setOnClickMathquillContent(editor) {
     let document = editor.getDoc();
     var mq = document.getElementsByClassName("mq-math-mode");
-    console.log('elements', mq);
-    
+    console.log("elements", mq);
+
     // Add onclick listener to all mathquill content
     for (let i = 0; i < mq.length; i++) {
         const mathquillContent = mq[i];
-        
+
         mathquillContent.contentEditable = "false";
-        if(mathquillContent.onclick) continue;  
+        if (mathquillContent.onclick) continue;
 
         mathquillContent.onclick = event => {
-            console.log('click', event);
-            
+            console.log("click", event);
+
             event.stopPropagation();
-            editor.execCommand(
-                "mathquill-window",
-                {
-                    latex: event.currentTarget.dataset.latex,
-                    currentTarget: event.currentTarget,
-                }
-            );       
+            editor.execCommand("mathquill-window", {
+                latex: event.currentTarget.dataset.latex,
+                currentTarget: event.currentTarget
+            });
         };
     }
 }
