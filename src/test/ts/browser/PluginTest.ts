@@ -1,4 +1,4 @@
-import { Pipeline, Logger, GeneralSteps, Step } from '@ephox/agar';
+import { Pipeline, Logger, GeneralSteps } from '@ephox/agar';
 import { TinyLoader, TinyApis } from '@ephox/mcagar';
 import { UnitTest } from '@ephox/bedrock';
 import Plugin from '../../../main/ts/Plugin';
