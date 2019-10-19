@@ -25,7 +25,7 @@ const setup = (editor, url) => {
 
     // url
     if (typeof settings.url === 'undefined') {
-        settings.url = 'equation_editor.html';
+        settings.url = 'editor/equation_editor.html';
     } else if (typeof settings.url === 'undefined') {
         throw new Error('\'url\' property must be a string in mathquill_editor_config');
     }

@@ -13,7 +13,7 @@ function init(selector, inline: boolean) {
         inline,
         plugins: 'code mathquill-editor',
         toolbar: 'mathquill-editor',
-        content_css: 'mathquill/mathquill.css',
+        content_css: 'editor/mathquill/mathquill.css',
         mathquill_editor_group: 'advanced',
     });
 }
