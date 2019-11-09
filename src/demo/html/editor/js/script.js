@@ -18,6 +18,16 @@ var app = new Vue({
         }
     },
 
+    mounted() {
+        window.parent.postMessage(
+            {
+                mceAction: 'mathquill-mounted',
+                status: true,
+            },
+            '*'
+        );
+    },
+
     methods: {
         collapse(event) {
             event.target.classList.toggle('active');
