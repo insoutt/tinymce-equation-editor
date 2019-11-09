@@ -1,54 +1,48 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Equation Editor</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script type="text/javascript" src="mathquill/mathquill.js"></script>
-        <link rel="stylesheet" type="text/css" href="mathquill/mathquill.css" />
-        <link rel="stylesheet" type="text/css" href="css/equation_editor.css" />
-        <!-- dev script -->
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <!-- use this in production -->
-        <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
-    </head>
 
-    <body>
-        <div id="app" class="container">
-            <div class="col-1">
-                <!-- Button Bar -->
-                <div class="btn-container m-0">
-                    <button
-                        @click="insert(button)"
-                        v-for="button in buttonBar"
-                        class="btn"
-                    >
-                        {{ button.text }}
-                    </button>
-                </div>
-                <!-- Editor -->
-                <div id="math-field" class="mathquill-editor"></div>
+<head>
+    <title>Equation Editor</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="mathquill/mathquill.js"></script>
+    <link rel="stylesheet" type="text/css" href="mathquill/mathquill.css" />
+    <link rel="stylesheet" type="text/css" href="css/equation_editor.css" />
+    <!-- dev script -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- use this in production -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+</head>
+
+<body>
+    <div id="app" class="container">
+        <div class="col-1">
+            <!-- Button Bar -->
+            <div class="btn-container m-0">
+                <button @click="insert(button)" v-for="button in buttonBar" class="btn btn-toolbar">
+                    {{ button.text }}
+                </button>
             </div>
-            <div class="col-2">
-                <div class="col-2-container">
-                    <div v-for="(group, index) in currentGroup">
-                        <button @click="collapse" class="collapsible">
-                            {{ group.name }}
-                        </button>
-                        <div class="content">
-                            <div class="btn-container">
-                                <button
-                                    @click="insert(button)"
-                                    v-for="button in group.buttons"
-                                    class="btn"
-                                >
-                                    {{ button.text }}
-                                </button>
-                            </div>
+            <!-- Editor -->
+            <div id="math-field" class="mathquill-editor"></div>
+        </div>
+        <div class="col-2">
+            <div class="col-2-container">
+                <div v-for="(group, index) in currentGroup">
+                    <button @click="collapse" class="collapsible">
+                        {{ group.name }}
+                    </button>
+                    <div class="content">
+                        <div class="btn-container">
+                            <button @click="insert(button)" v-for="button in group.buttons" class="btn btn-collapse">
+                                {{ button.text }}
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <script src="js/script.js"></script>
-    </body>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+
 </html>
