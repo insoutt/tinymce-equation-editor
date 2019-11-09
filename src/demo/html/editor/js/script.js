@@ -84,12 +84,16 @@ var app = new Vue({
                 '*'
             );
         },
+        parseContent(classname) {
+            let btns = document.getElementsByClassName(classname);
+            for (let i = 0; i < btns.length; i++) {
+                MQ.StaticMath(btns[i]);
+            }
+        },
     },
 
     updated() {
-        let btns = document.getElementsByClassName('btn');
-        for (let i = 0; i < btns.length; i++) {
-            MQ.MathField(btns[i]);
-        }
+        this.parseContent('btn-toolbar');
+        this.parseContent('btn-collapse');
     },
 });
