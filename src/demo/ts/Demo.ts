@@ -11,9 +11,9 @@ function init(selector, inline: boolean) {
     tinymce.init({
         selector,
         inline,
-        plugins: 'code mathquill-editor',
-        toolbar: 'mathquill-editor',
+        plugins: 'code equation-editor',
+        toolbar: 'equation-editor',
         content_css: 'https://unpkg.com/mathlive/dist/mathlive.css',
-        mathquill_editor_group: 'advanced',
+        equation_editor_group: 'advanced',
     });
 }

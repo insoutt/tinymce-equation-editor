@@ -23,7 +23,7 @@ var app = new Vue({
         }, 200);
         window.parent.postMessage(
             {
-                mceAction: 'mathquill-mounted',
+                mceAction: 'equation-mounted',
                 status: true,
             },
             '*'
@@ -43,15 +43,15 @@ var app = new Vue({
         getParams(evt) {
             let data = evt.data;
             console.log('received', data);
-            this.defaultGroup = data.mathquill_editor_group;
-            this.buttonBar = data.mathquill_editor_button_bar;
-            this.buttonGroups = data.mathquill_editor_button_groups;
+            this.defaultGroup = data.equation_editor_group;
+            this.buttonBar = data.equation_editor_button_bar;
+            this.buttonGroups = data.equation_editor_button_groups;
             this.currentGroup = this.buttonGroups[this.defaultGroup];
             this.latex = data.latex;
-            this.initMathquill();
+            this.initEequation();
         },
 
-        initMathquill() {
+        initEequation() {
             this.mathField = MathLive.makeMathField('math-field', {
                 onContentDidChange: mathfield => {
                     this.latex = this.mathField.$latex();
@@ -71,7 +71,7 @@ var app = new Vue({
 
         sendLatex() {
             var content = {
-                mceAction: 'mathquill-update',
+                mceAction: 'equation-update',
                 html: MathLive.latexToMarkup(this.latex),
                 latex: this.latex,
             }

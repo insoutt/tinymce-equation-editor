@@ -8,19 +8,19 @@ interface Group {
     buttons: Array<ButtonConfig>;
 }
 
-interface DataMathquillWindow {
+interface DataEquationWindow {
     latex?: string;
     currentTarget?: string;
 }
 
 const setup = (editor, url) => {
-    let settings = editor.settings.mathquill_editor_config;
+    let settings = editor.settings.equation_editor_config;
 
-    // mathquill_editor_config
+    // equation_editor_config
     if (typeof settings === 'undefined') {
         settings = {};
     } else if (typeof settings !== 'object') {
-        throw new Error("'mathquill_editor_config' property must be an object");
+        throw new Error("'equation_editor_config' property must be an object");
     }
 
     // url
@@ -28,7 +28,7 @@ const setup = (editor, url) => {
         settings.url = 'editor/equation_editor.html';
     } else if (typeof settings.url === 'undefined') {
         throw new Error(
-            "'url' property must be a string in mathquill_editor_config"
+            "'url' property must be a string in equation_editor_config"
         );
     }
 
@@ -37,7 +37,7 @@ const setup = (editor, url) => {
         settings.origin = document.location.origin;
     } else if (typeof settings.origin === 'undefined') {
         throw new Error(
-            "'origin' property must be a string in mathquill_editor_config"
+            "'origin' property must be a string in equation_editor_config"
         );
     }
 
@@ -46,7 +46,7 @@ const setup = (editor, url) => {
         settings.title = 'Equation Editor';
     } else if (typeof settings.title === 'undefined') {
         throw new Error(
-            "'title' property must be a string in mathquill_editor_config"
+            "'title' property must be a string in equation_editor_config"
         );
     }
 
@@ -55,7 +55,7 @@ const setup = (editor, url) => {
         settings.space_after_content = '&nbsp;';
     } else if (typeof settings.space_after_content === 'undefined') {
         throw new Error(
-            "'space_after_content' property must be a string in mathquill_editor_config"
+            "'space_after_content' property must be a string in equation_editor_config"
         );
     }
 
@@ -64,7 +64,7 @@ const setup = (editor, url) => {
         settings.btn_cancel_text = 'Cancel';
     } else if (typeof settings.btn_cancel_text === 'undefined') {
         throw new Error(
-            "'btn_cancel_text' property must be a string in mathquill_editor_config"
+            "'btn_cancel_text' property must be a string in equation_editor_config"
         );
     }
 
@@ -73,19 +73,19 @@ const setup = (editor, url) => {
         settings.btn_ok_text = 'Insert';
     } else if (typeof settings.btn_ok_text === 'undefined') {
         throw new Error(
-            "'btn_ok_text' property must be a string in mathquill_editor_config"
+            "'btn_ok_text' property must be a string in equation_editor_config"
         );
     }
 
-    let groups = editor.settings.mathquill_editor_button_groups;
-    let btnBar = editor.settings.mathquill_editor_button_bar;
-    let groupName = editor.settings.mathquill_editor_group;
+    let groups = editor.settings.equation_editor_button_groups;
+    let btnBar = editor.settings.equation_editor_button_bar;
+    let groupName = editor.settings.equation_editor_group;
     let htmlLatex = '';
 
     if (typeof groupName === 'undefined') {
         groupName = 'basic';
     } else if (typeof groupName !== 'string') {
-        throw new Error("'mathquill_editor_group' property must be a string");
+        throw new Error("'equation_editor_group' property must be a string");
     }
 
     if (typeof groups === 'undefined') {
@@ -628,12 +628,12 @@ const setup = (editor, url) => {
 
     // ----- Events ----- //
     editor.on('init', () => {
-        setOnClickMathquillContent(editor);
+        setOnClickEquationContent(editor);
     });
 
     // ----- Commands ----- //
-    editor.addCommand('mathquill-window', function (
-        data: DataMathquillWindow = {}
+    editor.addCommand('equation-window', function (
+        data: DataEquationWindow = {}
     ) {
         editor.windowManager.openUrl({
             url: settings.url,
@@ -652,7 +652,7 @@ const setup = (editor, url) => {
                 },
             ],
             onAction: () => {
-                editor.execCommand('mathquill-insert', {
+                editor.execCommand('equation-insert', {
                     html: htmlLatex,
                     latex: data.latex,
                     currentTarget: data.currentTarget,
@@ -661,11 +661,11 @@ const setup = (editor, url) => {
             },
             onMessage: (instance, message) => {
                 switch (message.mceAction) {
-                    case 'mathquill-update':
+                    case 'equation-update':
                         htmlLatex = message.html;
                         data.latex = message.latex;
                         break;
-                    case 'mathquill-mounted':
+                    case 'equation-mounted':
                         sendParams(
                             settings,
                             btnBar,
@@ -679,40 +679,36 @@ const setup = (editor, url) => {
         });
     });
 
-    editor.addCommand('mathquill-insert', (data) => {
+    editor.addCommand('equation-insert', (data) => {
         if (!data) {
             return;
         }
 
         // Add span.mq-math-mode
-        let content = `
+        const content = `
             <span class='mq-math-mode' data-latex='${data.latex}'>
                 ${data.html}
             </span>${settings.space_after_content}`;
-
-        if (editor.getContent() === '') {
-            content = '<p>' + content + '</p>';
-        }
 
         if (data.currentTarget) {
             editor.selection.select(data.currentTarget);
         }
         editor.selection.setContent(content);
-        setOnClickMathquillContent(editor);
+        setOnClickEquationContent(editor);
     });
 
     // Register button
-    editor.ui.registry.addButton('mathquill-editor', {
+    editor.ui.registry.addButton('equation-editor', {
         title: 'Editor de ecuaciones',
         text: 'f(x)',
         onAction: () => {
-            editor.execCommand('mathquill-window');
+            editor.execCommand('equation-window');
         },
     });
 };
 
 export default () => {
-    tinymce.PluginManager.add('mathquill-editor', setup);
+    tinymce.PluginManager.add('equation-editor', setup);
 };
 
 function sendParams(settings, btnBar, groups, groupName, latex) {
@@ -751,29 +747,29 @@ function sendParams(settings, btnBar, groups, groupName, latex) {
 
     iframe.contentWindow.postMessage(
         {
-            mathquill_editor_group: groupName,
-            mathquill_editor_button_bar: buttonBar,
-            mathquill_editor_button_groups: groups,
+            equation_editor_group: groupName,
+            equation_editor_button_bar: buttonBar,
+            equation_editor_button_groups: groups,
             latex,
         },
         settings.origin
     );
 }
 
-function setOnClickMathquillContent(editor) {
+function setOnClickEquationContent(editor) {
     const tinymceDoc = editor.getDoc();
     const mqSpan = tinymceDoc.getElementsByClassName('mq-math-mode');
 
-    // Add onclick listener to all mathquill content
-    for (const mathquillContent of mqSpan) {
-        mathquillContent.contentEditable = 'false';
-        if (mathquillContent.onclick) {
+    // Add onclick listener to all equation content
+    for (const equationContent of mqSpan) {
+        equationContent.contentEditable = 'false';
+        if (equationContent.onclick) {
             continue;
         }
 
-        mathquillContent.onclick = (event) => {
+        equationContent.onclick = (event) => {
             event.stopPropagation();
-            editor.execCommand('mathquill-window', {
+            editor.execCommand('equation-window', {
                 latex: event.currentTarget.dataset.latex,
                 currentTarget: event.currentTarget,
             });
