@@ -100,7 +100,8 @@ module.exports = function (grunt) {
                         dest: 'dist/mathquill-editor',
                         expand: true
                     },
-                    { src: ['changelog.txt'], dest: 'dist/mathquill-editor', expand: true }
+                    { src: ['changelog.txt'], dest: 'dist/mathquill-editor', expand: true },
+                    { cwd: 'src/demo/html/editor', src: ['**'], dest: 'dist/mathquill-editor/editor', expand: true, filter: 'isFile' },
                 ]
             }
         },

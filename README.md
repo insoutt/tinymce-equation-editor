@@ -114,18 +114,6 @@ Run `npm start`
 
 Publish `npm run build`
 
-Copy dist/mathquill-editor
-
-And
-
-Copy src/demo/html/editor/css
-
-Copy src/demo/html/editor/js
-
-Copy src/demo/html/editor/mathquill
-
-Inside dist/mathquill-editor
-
 ### Pull Requests
 
 Please open your pull requests!
