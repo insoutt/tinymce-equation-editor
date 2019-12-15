@@ -79,11 +79,11 @@ module.exports = function (grunt) {
                 },
                 // scratchPluginMinPath is used twice on purpose, all outputs will be minified for premium plugins
                 files: {
-                    'dist/mathquill-editor/plugin.js': [
+                    'dist/equation-editor/plugin.js': [
                         'src/text/license-header.js',
                         scratchPluginMinPath
                     ],
-                    'dist/mathquill-editor/plugin.min.js': [
+                    'dist/equation-editor/plugin.min.js': [
                         'src/text/license-header.js',
                         scratchPluginMinPath
                     ]
@@ -97,11 +97,11 @@ module.exports = function (grunt) {
                     {
                         cwd: 'src/text',
                         src: ['license.txt'],
-                        dest: 'dist/mathquill-editor',
+                        dest: 'dist/equation-editor',
                         expand: true
                     },
-                    { src: ['changelog.txt'], dest: 'dist/mathquill-editor', expand: true },
-                    { cwd: 'src/demo/html/editor', src: ['**'], dest: 'dist/mathquill-editor/editor', expand: true, filter: 'isFile' },
+                    { src: ['changelog.txt'], dest: 'dist/equation-editor', expand: true },
+                    { cwd: 'src/demo/html/editor', src: ['**'], dest: 'dist/equation-editor/editor', expand: true, filter: 'isFile' },
                 ]
             }
         },
@@ -155,7 +155,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('@ephox/swag');
 
     grunt.registerTask('version', 'Creates a version file', function () {
-        grunt.file.write('dist/mathquill-editor/version.txt', BUILD_VERSION);
+        grunt.file.write('dist/equation-editor/version.txt', BUILD_VERSION);
     });
 
     grunt.registerTask('default', [
