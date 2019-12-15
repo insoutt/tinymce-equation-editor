@@ -11,6 +11,9 @@ Equation Editor plugin for [TinyMCE](http://www.tinymce.com/) that uses [Mathqui
 Run the command:
 
 ```
+npm start
+```
+```
 node_modules/http-server/bin/http-server
 ```
 

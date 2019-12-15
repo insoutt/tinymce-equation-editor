@@ -3,9 +3,8 @@
 
 <head>
     <title>Equation Editor</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="mathquill/mathquill.js"></script>
-    <link rel="stylesheet" type="text/css" href="mathquill/mathquill.css" />
+    <link rel="stylesheet" href="https://unpkg.com/mathlive/dist/mathlive.core.css">
+    <link rel="stylesheet" href="https://unpkg.com/mathlive/dist/mathlive.css">
     <link rel="stylesheet" type="text/css" href="css/equation_editor.css" />
     <!-- dev script -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -19,7 +18,7 @@
             <!-- Button Bar -->
             <div class="btn-container m-0">
                 <button @click="insert(button)" v-for="button in buttonBar" class="btn btn-toolbar">
-                    {{ button.text }}
+                    $${{ button.text }}$$
                 </button>
             </div>
             <!-- Editor -->
@@ -34,7 +33,7 @@
                     <div class="content">
                         <div class="btn-container">
                             <button @click="insert(button)" v-for="button in group.buttons" class="btn btn-collapse">
-                                {{ button.text }}
+                                $${{ button.text }}$$
                             </button>
                         </div>
                     </div>
@@ -42,6 +41,7 @@
             </div>
         </div>
     </div>
+    <script src="https://unpkg.com/mathlive"></script>
     <script src="js/script.js"></script>
 </body>
 

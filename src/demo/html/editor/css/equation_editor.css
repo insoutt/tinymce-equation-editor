@@ -1,23 +1,19 @@
 .container {
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: stretch;
+    flex-direction: column;
 }
 
 .col-1 {
-    order: 1;
-    flex-basis: 60%;
 }
 .col-2 {
-    order: 2;
-    flex-basis: 40%;
+    margin-top: 1rem;
 }
 
-.mathquill-editor {
-    width: 100%;
+.ML__fieldcontainer__field {
+    max-width: 100%;
     min-height: 100px;
+    border: 1px solid #333333;
+    overflow-x: scroll;
 }
 
 .collapsible {

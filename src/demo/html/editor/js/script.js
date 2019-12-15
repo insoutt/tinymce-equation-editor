@@ -1,4 +1,3 @@
-var MQ = MathQuill.getInterface(2);
 var app = new Vue({
     el: '#app',
     data: {
@@ -19,6 +18,9 @@ var app = new Vue({
     },
 
     mounted() {
+        setTimeout(function() {
+            MathLive.renderMathInDocument();
+        }, 200);
         window.parent.postMessage(
             {
                 mceAction: 'mathquill-mounted',
@@ -50,50 +52,31 @@ var app = new Vue({
         },
 
         initMathquill() {
-            var mathFieldSpan = document.getElementById('math-field');
-            this.mathField = MQ.MathField(mathFieldSpan, {
-                spaceBehavesLikeTab: true, // configurable
-                handlers: {
-                    edit: () => {
-                        this.latex = this.mathField.latex();
-                        this.sendLatex();
-                    },
-                },
+            this.mathField = MathLive.makeMathField('math-field', {
+                onContentDidChange: mathfield => {
+                    this.latex = this.mathField.$latex();
+                    this.sendLatex();
+                }
             });
 
             if (this.latex) {
-                this.mathField.latex(this.latex);
+                this.mathField.$latex(this.latex);
             }
         },
         insert(button) {
-            if (button.cmd) {
-                this.mathField.cmd(button.latex);
-            } else {
-                this.mathField.write(button.latex);
-            }
-            this.mathField.focus();
+            this.mathField.$insert(button.latex, {
+                focus: true,
+            });
         },
 
         sendLatex() {
-            window.parent.postMessage(
-                {
-                    mceAction: 'mathquill-update',
-                    html: this.mathField.html(),
-                    latex: this.latex,
-                },
-                '*'
-            );
-        },
-        parseContent(classname) {
-            let btns = document.getElementsByClassName(classname);
-            for (let i = 0; i < btns.length; i++) {
-                MQ.StaticMath(btns[i]);
+            var content = {
+                mceAction: 'mathquill-update',
+                html: MathLive.latexToMarkup(this.latex),
+                latex: this.latex,
             }
+            //console.info('Send', content);
+            window.parent.postMessage(content, '*');
         },
-    },
-
-    updated() {
-        this.parseContent('btn-toolbar');
-        this.parseContent('btn-collapse');
     },
 });

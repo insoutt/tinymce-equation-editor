@@ -228,13 +228,13 @@ const setup = (editor, url) => {
                         },
                         {
                             cmd: true,
-                            latex: '\\thirdroot',
-                            text: '\\nthroot[3]{x}',
+                            latex: '\\sqrt[\\placeholder{3}]{\\placeholder{}}',
+                            text: '\\sqrt[\\placeholder{3}]{\\placeholder{x}}',
                         },
                         {
                             cmd: true,
-                            latex: '\\nthroot',
-                            text: '\\nthroot[n]{x}',
+                            latex: '\\sqrt[\\placeholder{}]{\\placeholder{}}',
+                            text: '\\sqrt[\\placeholder{n}]{\\placeholder{x}}',
                         },
                         {
                             cmd: false,
@@ -554,6 +554,34 @@ const setup = (editor, url) => {
                         },
                     ],
                 },
+                {
+                    name: 'Matrix',
+                    buttons: [
+                        {
+                            cmd: true,
+                            latex: '\\begin{bmatrix} \\placeholder{} & \\placeholder{} \\\\ \\placeholder{} & \\placeholder{} \\end{bmatrix}',
+                            text: '\\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix}',
+                        },
+                        {
+                            cmd: true,
+                            latex: '\\begin{bmatrix} \\placeholder{} & \\placeholder{} & c \\\\ \\placeholder{} & \\placeholder{} & f \\\\ \\placeholder{} & \\placeholder{} & \\placeholder{} \\end{bmatrix}',
+                            text: '\\begin{bmatrix} a & b & c \\\\ d & e & f \\\\ g & h & i \\end{bmatrix}',
+                        },
+                    ],
+                },
+                {
+                    name: 'Equation System',
+                    buttons: [
+                        {
+                            cmd: true,
+                            text: '\\begin{cases} x + y \\\\ x – y \\end{cases}',
+                        },
+                        {
+                            cmd: true,
+                            text: '\\begin{cases} x + y + z \\\\ x – y + z \\\\ x + y + z \\end{cases}',
+                        },
+                    ],
+                },
             ],
         };
     }
@@ -583,8 +611,8 @@ const setup = (editor, url) => {
                 cmd: true,
             },
             {
-                latex: '\\nthroot',
-                text: '\\nthroot[x]{y}',
+                latex: '\\sqrt[\\placeholder{}]{\\placeholder{}}',
+                text: '\\sqrt[\\placeholder{n}]{\\placeholder{x}}',
                 cmd: true,
             },
             {
