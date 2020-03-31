@@ -19,7 +19,7 @@
         "@ephox/mcagar": "latest",
         "@ephox/swag": "latest",
         "@ephox/tslint-rules": "latest",
-        "@types/mocha": "^5.2.6",
+        "@types/mocha": "^7.0.2",
         "awesome-typescript-loader": "^5.2.1",
         "chai": "^4.2.0",
         "grunt": "^1.0.3",
