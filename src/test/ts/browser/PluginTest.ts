@@ -15,15 +15,15 @@ UnitTest.asynctest('browser.PluginTest', (success, failure) => {
                 {},
                 [
                     Logger.t(
-                        'test mathquill-insert command',
+                        'test equation-insert command',
                         GeneralSteps.sequence([
-                            tinyApis.sExecCommand('mathquill-insert', {
+                            tinyApis.sExecCommand('equation-insert', {
                                 html:
                                     '<var>y</var><span class="mq-supsub mq-non-leaf mq-sup-only"><span class="mq-sup"><var>x</var></span></span>',
                                 latex: 'y^x',
                             }),
                             tinyApis.sAssertContent(
-                                '<p><var>y</var><span class="mq-supsub mq-non-leaf mq-sup-only"><span class="mq-sup"><var>x</var></span></span><p>'
+                                '<p><span class="mq-math-mode" data-latex="y^x" contenteditable="false"><var>y</var><span class="mq-supsub mq-non-leaf mq-sup-only"><span class="mq-sup"><var>x</var></span></span></span>&nbsp;<br data-mce-bogus="1"></p>'
                             ),
                         ])
                     ),
@@ -33,10 +33,11 @@ UnitTest.asynctest('browser.PluginTest', (success, failure) => {
             );
         },
         {
-            plugins: 'mathquill-editor',
-            toolbar: 'mathquill-editor',
+            plugins: 'equation-editor',
+            toolbar: 'equation-editor',
         },
         success,
         failure
     );
 });
+

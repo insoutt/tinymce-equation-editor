@@ -6,8 +6,8 @@
         "prepublishOnly": "npm run lint && npm run build",
         "lint": "tslint src/**/*.ts",
         "build": "grunt",
-        "test": "bedrock-auto -b phantomjs -d src/test/ts/",
-        "test-manual": "bedrock -d src/test/ts/",
+        "test": "node_modules/@ephox/bedrock/bin/bedrock-auto.js --browser chrome -d src/test/ts/",
+        "test-manual": "node_modules/@ephox/bedrock/bin/bedrock.js -d src/test/ts/",
         "unit": "mocha",
         "start": "grunt webpack"
     },
