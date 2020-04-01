@@ -33,7 +33,15 @@ export default class ButtonsTransformer {
                 cmd: false,
             };
 
-            // Text property
+            // If button is string
+            if (typeof button === 'string') {
+                btn.text = button;
+                btn.latex = button;
+                btn.cmd = false;
+                return btn;
+            }
+
+            // Set text property
             if (typeof button !== 'object') {
                 throw new Error('Button must be an object');
             } else if (typeof button.text === 'undefined') {
@@ -44,7 +52,7 @@ export default class ButtonsTransformer {
                 btn.text = button.text;
             }
 
-            // Latex property
+            // Set latex property
             if (typeof button.latex === 'undefined') {
                 btn.latex = button.text;
             } else if (typeof button.latex !== 'string') {

@@ -2,8 +2,50 @@ import { expect, assert } from 'chai';
 import ButtonsTransformer from '../../../main/ts/ButtonsTransformer';
 
 describe('Test ButtonsTransformer', function () {
-    it('check string to array', function () {
+    it('check string', function () {
         const transformer = new ButtonsTransformer('+ \\times');
+
+        expect(transformer.transform()).to.eql([
+            {
+                text: '+',
+                latex: '+',
+                cmd: false,
+            },
+            {
+                text: '\\times',
+                latex: '\\times',
+                cmd: false,
+            },
+        ]);
+    });
+
+
+    it('check array of strings', function () {
+        const transformer = new ButtonsTransformer(['+', '\\times']);
+
+        expect(transformer.transform()).to.eql([
+            {
+                text: '+',
+                latex: '+',
+                cmd: false,
+            },
+            {
+                text: '\\times',
+                latex: '\\times',
+                cmd: false,
+            },
+        ]);
+    });
+
+    it('check array of strings and objects', function () {
+        const transformer = new ButtonsTransformer([
+            '+',
+            {
+                text: '\\times',
+                latex: '\\times',
+                cmd: false,
+            },
+        ]);
 
         expect(transformer.transform()).to.eql([
             {
