@@ -19,7 +19,6 @@ describe('Test ButtonsTransformer', function () {
         ]);
     });
 
-
     it('check array of strings', function () {
         const transformer = new ButtonsTransformer(['+', '\\times']);
 
