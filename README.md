@@ -39,6 +39,9 @@ The configuration options for `equation-editor` plugin are:
             space_after_content: '&nbsp;',
             btn_cancel_text: 'Cancel',
             btn_ok_text: 'Insert',
+            mathlive_config: {
+                smartMode: true,
+            },
         },
         equation_editor_group: 'basic',
         equation_editor_button_groups: {
@@ -56,6 +59,7 @@ The configuration options for `equation-editor` plugin are:
 
 For advanced buttons you can use an object of buttons in `equation_editor_button_groups`
 
+In property `mathlive_config` you can use all available properties of [MathLive Config](http://docs.mathlive.io/tutorial-CONFIG.html) or you can ignore this property to use default configuration.
 ```js
 equation_editor_button_groups: {
     basic: [{

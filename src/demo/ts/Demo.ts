@@ -15,5 +15,11 @@ function init(selector, inline: boolean) {
         toolbar: 'equation-editor',
         content_css: 'https://unpkg.com/mathlive/dist/mathlive.css',
         equation_editor_group: 'advanced',
+        equation_editor_config: {
+            mathlive_config: {
+                smartMode: true,
+            },
+        },
+
     });
 }

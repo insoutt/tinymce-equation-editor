@@ -13,73 +13,23 @@ interface DataEquationWindow {
     currentTarget?: string;
 }
 
+interface EditorSettings {
+    url: string;
+    origin: string;
+    title: string;
+    space_after_content: string;
+    btn_cancel_text: string;
+    btn_ok_text: string;
+    mathlive_config?: object;
+}
+
 const setup = (editor, url) => {
-    let settings = editor.settings.equation_editor_config;
-
-    // equation_editor_config
-    if (typeof settings === 'undefined') {
-        settings = {};
-    } else if (typeof settings !== 'object') {
-        throw new Error("'equation_editor_config' property must be an object");
-    }
-
-    // url
-    if (typeof settings.url === 'undefined') {
-        settings.url = 'editor/equation_editor.html';
-    } else if (typeof settings.url === 'undefined') {
-        throw new Error(
-            "'url' property must be a string in equation_editor_config"
-        );
-    }
-
-    // origin
-    if (typeof settings.origin === 'undefined') {
-        settings.origin = document.location.origin;
-    } else if (typeof settings.origin === 'undefined') {
-        throw new Error(
-            "'origin' property must be a string in equation_editor_config"
-        );
-    }
-
-    // title
-    if (typeof settings.title === 'undefined') {
-        settings.title = 'Equation Editor';
-    } else if (typeof settings.title === 'undefined') {
-        throw new Error(
-            "'title' property must be a string in equation_editor_config"
-        );
-    }
-
-    // space_after_content
-    if (typeof settings.space_after_content === 'undefined') {
-        settings.space_after_content = '&nbsp;';
-    } else if (typeof settings.space_after_content === 'undefined') {
-        throw new Error(
-            "'space_after_content' property must be a string in equation_editor_config"
-        );
-    }
-
-    // btn_cancel_text
-    if (typeof settings.btn_cancel_text === 'undefined') {
-        settings.btn_cancel_text = 'Cancel';
-    } else if (typeof settings.btn_cancel_text === 'undefined') {
-        throw new Error(
-            "'btn_cancel_text' property must be a string in equation_editor_config"
-        );
-    }
-
-    // btn_ok_text
-    if (typeof settings.btn_ok_text === 'undefined') {
-        settings.btn_ok_text = 'Insert';
-    } else if (typeof settings.btn_ok_text === 'undefined') {
-        throw new Error(
-            "'btn_ok_text' property must be a string in equation_editor_config"
-        );
-    }
-
-    let groups = editor.settings.equation_editor_button_groups;
-    let btnBar = editor.settings.equation_editor_button_bar;
-    let groupName = editor.settings.equation_editor_group;
+    const editorSettings: EditorSettings = getEditorSettings(editor);
+    const settings = editor.settings;
+    // Editor global params
+    let groups = settings.equation_editor_button_groups;
+    let btnBar = settings.equation_editor_button_bar;
+    let groupName = settings.equation_editor_group;
     let htmlLatex = '';
 
     if (typeof groupName === 'undefined') {
@@ -636,18 +586,18 @@ const setup = (editor, url) => {
         data: DataEquationWindow = {}
     ) {
         editor.windowManager.openUrl({
-            url: settings.url,
-            title: settings.title,
+            url: editorSettings.url,
+            title: editorSettings.title,
             width: 820,
             height: 400,
             buttons: [
                 {
                     type: 'cancel',
-                    text: settings.btn_cancel_text,
+                    text: editorSettings.btn_cancel_text,
                 },
                 {
                     type: 'custom',
-                    text: settings.btn_ok_text,
+                    text: editorSettings.btn_ok_text,
                     primary: true,
                 },
             ],
@@ -667,7 +617,7 @@ const setup = (editor, url) => {
                         break;
                     case 'equation-mounted':
                         sendParams(
-                            settings,
+                            editorSettings,
                             btnBar,
                             groups,
                             groupName,
@@ -688,7 +638,7 @@ const setup = (editor, url) => {
         const content = `
             <span class='mq-math-mode' data-latex='${data.latex}'>
                 ${data.html}
-            </span>${settings.space_after_content}`;
+            </span>${editorSettings.space_after_content}`;
 
         if (data.currentTarget) {
             editor.selection.select(data.currentTarget);
@@ -711,8 +661,81 @@ export default () => {
     tinymce.PluginManager.add('equation-editor', setup);
 };
 
-function sendParams(settings, btnBar, groups, groupName, latex) {
-    const iframe = document.querySelector("iframe[src='" + settings.url + "']");
+function getEditorSettings(editor): EditorSettings {
+    // equation_editor_config
+    let editorSettings = editor.settings.equation_editor_config;
+
+    if (typeof editorSettings === 'undefined') {
+        editorSettings = {};
+    } else if (typeof editorSettings !== 'object') {
+        throw new Error("'equation_editor_config' property must be an object");
+    }
+
+    // url
+    if (typeof editorSettings.url === 'undefined') {
+        editorSettings.url = 'editor/equation_editor.html';
+    } else if (typeof editorSettings.url !== 'string') {
+        throw new Error(
+            "'url' property must be a string in equation_editor_config"
+        );
+    }
+
+    // origin
+    if (typeof editorSettings.origin === 'undefined') {
+        editorSettings.origin = document.location.origin;
+    } else if (typeof editorSettings.origin !== 'string') {
+        throw new Error(
+            "'origin' property must be a string in equation_editor_config"
+        );
+    }
+
+    // title
+    if (typeof editorSettings.title === 'undefined') {
+        editorSettings.title = 'Equation Editor';
+    } else if (typeof editorSettings.title !== 'string') {
+        throw new Error(
+            "'title' property must be a string in equation_editor_config"
+        );
+    }
+
+    // space_after_content
+    if (typeof editorSettings.space_after_content === 'undefined') {
+        editorSettings.space_after_content = '&nbsp;';
+    } else if (typeof editorSettings.space_after_content !== 'string') {
+        throw new Error(
+            "'space_after_content' property must be a string in equation_editor_config"
+        );
+    }
+
+    // btn_cancel_text
+    if (typeof editorSettings.btn_cancel_text === 'undefined') {
+        editorSettings.btn_cancel_text = 'Cancel';
+    } else if (typeof editorSettings.btn_cancel_text !== 'string') {
+        throw new Error(
+            "'btn_cancel_text' property must be a string in equation_editor_config"
+        );
+    }
+
+    // btn_ok_text
+    if (typeof editorSettings.btn_ok_text === 'undefined') {
+        editorSettings.btn_ok_text = 'Insert';
+    } else if (typeof editorSettings.btn_ok_text !== 'string') {
+        throw new Error(
+            "'btn_ok_text' property must be a string in equation_editor_config"
+        );
+    }
+
+    if (typeof editorSettings.mathlive_config !== 'object' && typeof editorSettings.mathlive_config !== 'undefined') {
+        throw new Error(
+            "'mathlive_config' property must be a object with config of mathlive, see http://docs.mathlive.io/tutorial-CONFIG.html"
+        );
+    }
+
+    return editorSettings;
+}
+
+function sendParams(editorSettings: EditorSettings, btnBar, groups, groupName, latex) {
+    const iframe = document.querySelector("iframe[src='" + editorSettings.url + "']");
     const buttonBar = new ButtonsTransformer(btnBar).transform();
 
     for (const name in groups) {
@@ -745,14 +768,16 @@ function sendParams(settings, btnBar, groups, groupName, latex) {
         groups[name] = transformGroup;
     }
 
+    // Send params to Equation Editor iframe
     iframe.contentWindow.postMessage(
         {
             equation_editor_group: groupName,
             equation_editor_button_bar: buttonBar,
             equation_editor_button_groups: groups,
+            mathlive_config: editorSettings.mathlive_config,
             latex,
         },
-        settings.origin
+        editorSettings.origin
     );
 }
 
