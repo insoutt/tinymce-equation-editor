@@ -117,7 +117,7 @@ Run `yarn unit`
 Please open your pull requests!
 
 ### License
-The TinyMCE plugin is open-sourced software licensed under the [MIT license](https://github.com/insoutt/tinymce-equation-editor/blob/master/LICENSE).
+This project is licensed under the [MIT license](https://github.com/insoutt/tinymce-equation-editor/blob/master/LICENSE).
 
 ### Notes
-- This plugin was inspired in ![Foraker TinyMCE Equation Editor](https://github.com/foraker/tinymce_equation_editor)
+- This plugin was inspired in ![Foraker TinyMCE Equation Editor](https://github.com/foraker/tinymce_equation_editor) but with more personalization, without JQuery and MathLive instead of Mathquill.
