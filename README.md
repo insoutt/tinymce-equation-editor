@@ -8,22 +8,6 @@ Equation Editor plugin for [TinyMCE](http://www.tinymce.com/) that uses [MathLiv
 
 Available commands: https://mathlive.io/reference.html
 
-## How do I use it?
-
-Download or clone the repository and then run the following commands:
-
-```
-yarn
-```
-```
-yarn start
-```
-```
-node_modules/http-server/bin/http-server
-```
-
-And visit http://localhost:8080/src/demo/html/ to test the editor
-
 ## Usage
 
 Move the folder `dist/equation-editor/` into TinyMCE plugin directory (`tinymce/plugins/`) and add the plugin in your TinyMCE configuration.
@@ -106,6 +90,24 @@ equation_editor_button_bar: [
 ];
 ```
 
+
+## Development
+
+Download or clone the repository and then run the following commands:
+
+```
+yarn
+```
+```
+yarn start
+```
+```
+node_modules/http-server/bin/http-server
+```
+
+And visit http://localhost:8080/src/demo/html/ to test the editor
+
+
 ### Testing
 
 Run `yarn unit`
@@ -116,3 +118,6 @@ Please open your pull requests!
 
 ### License
 The TinyMCE plugin is open-sourced software licensed under the [MIT license](https://github.com/insoutt/tinymce-equation-editor/blob/master/LICENSE).
+
+### Notes
+- This plugin was inspired in ![Foraker TinyMCE Equation Editor](https://github.com/foraker/tinymce_equation_editor)
