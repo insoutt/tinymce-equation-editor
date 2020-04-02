@@ -5,7 +5,6 @@
 .cache
 .idea/
 /lib
-/dist
 /scratch
 node_modules
 /config/repl
