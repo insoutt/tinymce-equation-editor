@@ -1,3 +1,15 @@
-node_modules/
-scratch/
+.DS_Store
+*~
+*.iws
+*.sublime-workspace
+.cache
 .idea/
+/lib
+/dist
+/scratch
+node_modules
+/config/repl
+/*.log
+ephox-*.tgz
+package-lock.json
+jenkins-plumbing

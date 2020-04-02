@@ -40,4 +40,3 @@ UnitTest.asynctest('browser.PluginTest', (success, failure) => {
         failure
     );
 });
-

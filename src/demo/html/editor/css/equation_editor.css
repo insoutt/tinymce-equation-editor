@@ -80,7 +80,7 @@
     padding-right: 10px;
 }
 
-/* Responsivo for mobile */
+/* Responsive for mobile */
 @media (max-width: 576px) {
     .col-1,
     .col-2 {

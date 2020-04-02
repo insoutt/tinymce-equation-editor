@@ -1,7 +1,7 @@
 {
-    "name": "tinymce-mathquill-plugin",
+    "name": "tinymce-equation-plugin",
     "version": "1.0.0",
-    "description": "Equation Editor plugin for TinyMCE that uses Mathquill",
+    "description": "Equation Editor plugin for TinyMCE that uses MathLive",
     "scripts": {
         "prepublishOnly": "npm run lint && npm run build",
         "lint": "tslint src/**/*.ts",
@@ -12,7 +12,7 @@
         "start": "grunt webpack"
     },
     "keywords": [],
-    "author": "Tiny Technologies Inc.",
+    "author": "insoutt",
     "devDependencies": {
         "@ephox/agar": "latest",
         "@ephox/bedrock": "latest",
@@ -56,5 +56,5 @@
     "main": "./lib/main/ts/api/Main.js",
     "module": "./lib/main/ts/api/Main.js",
     "types": "./lib/main/ts/api/Main.d.ts",
-    "license": "Apache-2.0"
+    "license": "MIT"
 }

@@ -10,8 +10,11 @@ Available commands: https://mathlive.io/reference.html
 
 ## How do I use it?
 
-Run the command:
+Download or clone the repository and then run the following commands:
 
+```
+yarn
+```
 ```
 yarn start
 ```
@@ -46,7 +49,7 @@ The configuration options for `equation-editor` plugin are:
         plugins: ['equation-editor'],
         toolbar: 'equation-editor',
         equation_editor_config: {
-            url: 'editor/equation_editor.html',
+            url: 'editor/equation_editor.html', // URL of equation editor Page
             origin: document.location.origin,
             title: 'Equation Editor',
             space_after_content: '&nbsp;',
@@ -103,19 +106,6 @@ equation_editor_button_bar: [
 ];
 ```
 
-## How do I contribute?
-
-### Local Setup
-
-Clone the repo:
-
-`git clone git@github.com:your_github_username/mathquill_editor.git`
-Run yarn: `yarn`
-
-Run `yarn start`
-
-Publish `yarn build`
-
 ### Testing
 
 Run `yarn unit`
@@ -124,3 +114,5 @@ Run `yarn unit`
 
 Please open your pull requests!
 
+### License
+The TinyMCE plugin is open-sourced software licensed under the [MIT license](https://github.com/insoutt/tinymce-equation-editor/blob/master/LICENSE).

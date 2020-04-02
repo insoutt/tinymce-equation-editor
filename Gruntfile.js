@@ -95,12 +95,11 @@ module.exports = function (grunt) {
             css: {
                 files: [
                     {
-                        cwd: 'src/text',
-                        src: ['license.txt'],
+                        src: ['LICENSE'],
                         dest: 'dist/equation-editor',
                         expand: true
                     },
-                    { src: ['changelog.txt'], dest: 'dist/equation-editor', expand: true },
+                    { src: ['CHANGELOG.md'], dest: 'dist/equation-editor', expand: true },
                     { cwd: 'src/demo/html/editor', src: ['**'], dest: 'dist/equation-editor/editor', expand: true, filter: 'isFile' },
                 ]
             }
