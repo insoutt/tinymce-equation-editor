@@ -7,6 +7,7 @@ var app = new Vue({
         currentGroup: [],
         mathField: '',
         latex: '',
+        mathLiveConfig: {},
     },
     created() {
         if (window.addEventListener) {
@@ -48,10 +49,11 @@ var app = new Vue({
             this.buttonGroups = data.equation_editor_button_groups;
             this.currentGroup = this.buttonGroups[this.defaultGroup];
             this.latex = data.latex;
-            this.initEequation();
+            this.mathLiveConfig = data.mathlive_config;
+            this.initEquation();
         },
 
-        initEequation() {
+        initEquation() {
             this.mathField = MathLive.makeMathField('math-field', {
                 onContentDidChange: mathfield => {
                     this.latex = this.mathField.$latex();
@@ -59,10 +61,17 @@ var app = new Vue({
                 }
             });
 
+            if (typeof this.mathLiveConfig === 'object') {
+                if (Object.keys(this.mathLiveConfig).length) {
+                    this.mathField.$setConfig(this.mathLiveConfig);
+                }
+            }
+
             if (this.latex) {
                 this.mathField.$latex(this.latex);
             }
         },
+
         insert(button) {
             this.mathField.$insert(button.latex, {
                 focus: true,

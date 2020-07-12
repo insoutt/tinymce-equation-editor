@@ -1,4 +1,3 @@
-import { ButtonConfig } from './ButtonsTransformer';
 export interface ButtonConfig {
     text: string;
     latex: string;
