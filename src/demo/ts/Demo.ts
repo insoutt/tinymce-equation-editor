@@ -13,7 +13,10 @@ function init(selector, inline: boolean) {
         inline,
         plugins: 'code equation-editor',
         toolbar: 'equation-editor',
-        content_css: 'https://unpkg.com/mathlive/dist/mathlive.css',
+        content_css: [
+            'https://unpkg.com/mathlive@0.35.0/dist/mathlive.core.css',
+            'https://unpkg.com/mathlive@0.35.0/dist/mathlive.css'
+        ],
         equation_editor_group: 'advanced',
         equation_editor_config: {
             mathlive_config: {
