@@ -33,7 +33,7 @@
         "http-server": "^0.11.1",
         "load-grunt-tasks": "^4.0.0",
         "mocha": "^6.2.2",
-        "tinymce": "^5.6.0",
+        "tinymce": "^5.7.1",
         "ts-loader": "^5.3.0",
         "ts-node": "^8.0.2",
         "tslib": "^1.9.3",
