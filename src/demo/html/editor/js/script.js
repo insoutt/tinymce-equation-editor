@@ -43,7 +43,9 @@ var app = new Vue({
         },
         getParams(evt) {
             let data = evt.data;
+            /*
             console.log('received', data);
+            */
             this.defaultGroup = data.equation_editor_group;
             this.buttonBar = data.equation_editor_button_bar;
             this.buttonGroups = data.equation_editor_button_groups;
@@ -51,29 +53,32 @@ var app = new Vue({
             this.latex = data.latex;
             this.mathLiveConfig = data.mathlive_config;
             this.initEquation();
+            this.mathField.focus();
         },
 
         initEquation() {
-            this.mathField = MathLive.makeMathField('math-field', {
-                onContentDidChange: mathfield => {
-                    this.latex = this.mathField.$latex();
-                    this.sendLatex();
-                }
+            this.mathField = new MathfieldElement();
+            
+            this.mathField.addEventListener('input', (ev) => {
+                this.latex = this.mathField.getValue();
+                this.sendLatex();
             });
 
             if (typeof this.mathLiveConfig === 'object') {
                 if (Object.keys(this.mathLiveConfig).length) {
-                    this.mathField.$setConfig(this.mathLiveConfig);
+                    this.mathField.setOptions(this.mathLiveConfig);
                 }
             }
 
             if (this.latex) {
-                this.mathField.$latex(this.latex);
+                this.mathField.setValue(this.latex);
             }
+
+            document.getElementById('math-field').appendChild(this.mathField);
         },
 
         insert(button) {
-            this.mathField.$insert(button.latex, {
+            this.mathField.insert(button.latex, {
                 focus: true,
             });
         },
@@ -81,7 +86,7 @@ var app = new Vue({
         sendLatex() {
             var content = {
                 mceAction: 'equation-update',
-                html: MathLive.latexToMarkup(this.latex),
+                html: MathLive.convertLatexToMarkup(this.latex),
                 latex: this.latex,
             }
             //console.info('Send', content);
