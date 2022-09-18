@@ -9,6 +9,15 @@
     margin-top: 1rem;
 }
 
+math-field {
+    margin: 10px;
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, .3);
+    box-shadow: 0 0 8px rgba(0, 0, 0, .2);
+    height: 100px;
+}
+
 .ML__fieldcontainer__field {
     max-width: 100%;
     min-height: 100px;
