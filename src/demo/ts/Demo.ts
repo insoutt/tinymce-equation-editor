@@ -14,13 +14,14 @@ function init(selector, inline: boolean) {
         plugins: 'code equation-editor',
         toolbar: 'equation-editor',
         content_css: [
-            'https://unpkg.com/mathlive@0.35.0/dist/mathlive.core.css',
-            'https://unpkg.com/mathlive@0.35.0/dist/mathlive.css'
+            'https://unpkg.com/mathlive@0.79.0/dist/mathlive-static.css',
+            'https://unpkg.com/mathlive@0.79.0/dist/mathlive-fonts.css'
         ],
         equation_editor_group: 'advanced',
         equation_editor_config: {
             mathlive_config: {
                 smartMode: true,
+                virtualKeyboardMode: 'onfocus',
             },
         },
 
