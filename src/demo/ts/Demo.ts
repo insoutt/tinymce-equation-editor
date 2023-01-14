@@ -11,6 +11,8 @@ function init(selector, inline: boolean) {
     tinymce.init({
         selector,
         inline,
+        // verify_html: false,
+        extended_valid_elements: 'span[class|style|data-atom-id]',
         plugins: 'code equation-editor',
         toolbar: 'equation-editor',
         content_css: [
@@ -21,7 +23,6 @@ function init(selector, inline: boolean) {
         equation_editor_config: {
             mathlive_config: {
                 smartMode: true,
-                virtualKeyboardMode: 'onfocus',
             },
         },
 

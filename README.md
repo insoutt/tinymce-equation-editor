@@ -16,12 +16,14 @@ Move the folder `dist/equation-editor/` into TinyMCE plugin directory (`tinymce/
 <script type="text/javascript">
     tinymce.init({
         selector: 'textarea',
+        extended_valid_elements: 'span[class|style|data-atom-id]', // Important for MathLive to work
         plugins: ['equation-editor'],
         toolbar: 'equation-editor',
     });
 </script>
 ```
-
+**Important:** You need to add the `extended_valid_elements` option to allow MathLive to work. This prevents TinyMCE from removing empty `span` elements that are used by MathLive.
+Another option is to use the `verify_html: false,` option to prevent TinyMCE to remove empty blocks.
 ## Configuration
 
 The configuration options for `equation-editor` plugin are:
@@ -31,6 +33,7 @@ The configuration options for `equation-editor` plugin are:
     tinymce.init({
         selector: 'textarea',
         plugins: ['equation-editor'],
+        extended_valid_elements: 'span[class|style|data-atom-id]',
         toolbar: 'equation-editor',
         equation_editor_config: {
             url: 'editor/equation_editor.html', // URL of equation editor Page
