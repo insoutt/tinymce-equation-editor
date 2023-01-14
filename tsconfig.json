@@ -5,7 +5,8 @@
         "module": "es2015",
         "importHelpers": true,
         "lib": [
-            "es2015"
+            "es2015",
+            "dom"
         ],
         "declaration": true,
         "noUnusedLocals": true,
