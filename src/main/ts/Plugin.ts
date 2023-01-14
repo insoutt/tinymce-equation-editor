@@ -24,12 +24,26 @@ interface EditorSettings {
 }
 
 const setup = (editor, url) => {
+    if (editor.editorManager.majorVersion === '6') {
+        editor.options.register('equation_editor_config', {
+            processor: 'object',
+        });
+        editor.options.register('equation_editor_group', {
+            processor: 'string',
+            default: 'basic',
+        });
+        editor.options.register('equation_editor_button_bar', {
+            processor: 'object',
+        });
+        editor.options.register('equation_editor_button_groups', {
+            processor: 'object',
+        });
+    }
     const editorSettings: EditorSettings = getEditorSettings(editor);
-    const settings = editor.settings;
     // Editor global params
-    let groups = settings.equation_editor_button_groups;
-    let btnBar = settings.equation_editor_button_bar;
-    let groupName = settings.equation_editor_group;
+    let groups = getSettings(editor, 'equation_editor_button_groups');
+    let btnBar = getSettings(editor, 'equation_editor_button_bar');
+    let groupName = getSettings(editor, 'equation_editor_group');
     let htmlLatex = '';
 
     if (typeof groupName === 'undefined') {
@@ -661,9 +675,16 @@ export default () => {
     tinymce.PluginManager.add('equation-editor', setup);
 };
 
+function getSettings(editor, key) {
+    if (editor.editorManager.majorVersion === '6') {
+        return editor.options.get(key);
+    }
+    return editor.settings[key];
+}
+
 function getEditorSettings(editor): EditorSettings {
     // equation_editor_config
-    let editorSettings = editor.settings.equation_editor_config;
+    let editorSettings = getSettings(editor, 'equation_editor_config');
 
     if (typeof editorSettings === 'undefined') {
         editorSettings = {};
