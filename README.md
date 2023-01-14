@@ -127,4 +127,4 @@ Please open your pull requests!
 This project is licensed under the [MIT license](https://github.com/insoutt/tinymce-equation-editor/blob/master/LICENSE).
 
 ### Notes
-- This plugin was inspired in ![Foraker TinyMCE Equation Editor](https://github.com/foraker/tinymce_equation_editor) but with more personalization, without JQuery and MathLive instead of Mathquill.
+- This plugin was inspired in [Foraker TinyMCE Equation Editor](https://github.com/foraker/tinymce_equation_editor) but with more personalization, without JQuery and MathLive instead of Mathquill.
